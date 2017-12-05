@@ -1,6 +1,6 @@
 #/bin/sh
 #
-# Create GALLERY.html file in it's entirety.
+# Create gallery view template.
 
 wipdir=${0%%mkgallerytemplate.sh}
 
@@ -27,13 +27,14 @@ cat <<BODY1
   <body class="no-touch">
 
     <table class="heading">
-      <tr>
-        <td class="title">
-          <h1>{{ pkgid }}</h1>
-          <p><a href="../contents.html">Table of Contents</a> -
-          <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
-        </td>
-        <td class="logo">
+      <tbody>
+        <tr>
+          <td class="title">
+            <h1>{{ pkgid }}</h1>
+            <p><a href="../contents.html">Table of Contents</a> -
+            <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
+          </td>
+          <td class="logo">
 BODY1
 
 # This mess does a nice job at creating the logo img tag from external base64.
@@ -42,8 +43,9 @@ cat logo-base64.txt | tr '\n' '\"'
 echo " />"
 
 cat <<BODY2
-        </td>
-      </tr>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="description">

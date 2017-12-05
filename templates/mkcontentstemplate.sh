@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Process CONTENTS.md to HTML.
+# Create content view template.
 
 wipdir=${0%%mkcontentstemplate.sh}
 
@@ -8,8 +8,7 @@ cat <<HEAD
 <html>
   <head>
     <title>{{ title }}</title>
-
-    <style>
+    <style type="text/css">
 HEAD
 
 # CSS inline
@@ -22,11 +21,12 @@ cat <<BODY1
   <body>
 
     <table class="heading">
-      <tr>
-        <td class="title">
-          <h1>{{ title }}</h1>
-        </td>
-        <td class="logo">
+      <tbody>
+        <tr>
+          <td class="title">
+            <h1>{{ title }}</h1>
+          </td>
+          <td class="logo">
 BODY1
 
 # This mess does a nice job at creating the logo img tag from external base64.
@@ -35,14 +35,14 @@ cat logo-base64.txt | tr '\n' '\"'
 echo " />"
 
 cat <<BODY2
-
-        </td>
-      </tr>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <h2>Table of Contents</h2>
 
-    <table border="1" class="contents">
+    <table class="contents">
 
       <thead>
         <tr>

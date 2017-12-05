@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# Process DETAIL.md to HTML.
+# Create detail view template.
 
 wipdir=${0%%mkdetailtemplate.sh}
 
@@ -21,30 +21,32 @@ cat <<BODY1
   <body>
 
     <table class="heading">
-      <tr>
-        <td class="title">
-          <h1>{{ pkgid }}</h1>
-          <p><a href="../contents.html">Table of Contents</a> -
-          <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
-        </td>
-        <td class="logo">
+      <tbody>
+        <tr>
+          <td class="title">
+            <h1>{{ pkgid }}</h1>
+            <p><a href="../contents.html">Table of Contents</a> -
+            <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
+          </td>
+          <td class="logo">
 BODY1
 
 # This mess does a nice job at creating the logo img tag from external base64.
 echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
-cat logo-base64.txt | tr '\n' '\"'
+cat ${wipdir}/logo-base64.txt | tr '\n' '\"'
 echo " />"
 
 cat <<BODY2
-        </td>
-      </tr>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="description">
       <p>{{ package["description"] }}</p>
     </div>
 
-    <table border="1" class="contents">
+    <table class="contents">
 
       <thead>
         <tr>
