@@ -50,6 +50,21 @@ a:active {
     color: #ffd64d;
 }
 
+table.heading {
+    width: 100%;
+    table-layout: fixed;
+}
+
+table.heading td.title {
+    width: 80%;
+    vertical-align: top;
+}
+
+table.heading td.logo {
+    width: 20%;
+    text-align: right;
+}
+
 table.contents {
     width: 100%;
     table-layout: fixed;

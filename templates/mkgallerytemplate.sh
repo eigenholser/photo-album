@@ -20,16 +20,35 @@ HEAD
 cat "$wipdir/gallery.css" | sed -e 's/^/        /'
 cat "$wipdir/index.css" | sed -e 's/^/        /'
 
-cat <<BODY
+cat <<BODY1
     </style>
   </head>
 
   <body class="no-touch">
 
-    <h1>{{ pkgid }}</h1>
+    <table class="heading">
+      <tr>
+        <td class="title">
+          <h1>{{ pkgid }}</h1>
+          <p><a href="../contents.html">Table of Contents</a> -
+          <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
+        </td>
+        <td class="logo">
+BODY1
 
-    <p><a href="../contents.html">Table of Contents</a> -
-    <a href="detail.html">Package Details</a></p>
+# This mess does a nice job at creating the logo img tag from external base64.
+echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
+cat logo-base64.txt | tr '\n' '\"'
+echo " />"
+
+cat <<BODY2
+        </td>
+      </tr>
+    </table>
+
+    <div class="description">
+      <p>{{ package["description"] }}</p>
+    </div>
 
     <div class="wrap">
 
@@ -48,4 +67,4 @@ cat <<BODY
 
   </body>
 </html>
-BODY
+BODY2

@@ -15,15 +15,32 @@ HEAD
 # CSS inline
 cat "$wipdir/index.css" | sed -e 's/^/      /'
 
-cat <<FOOT
+cat <<BODY1
     </style>
   </head>
 
   <body>
 
-    <h1>Table of Contents</h1>
+    <table class="heading">
+      <tr>
+        <td class="title">
+          <h1>{{ title }}</h1>
+        </td>
+        <td class="logo">
+BODY1
 
-    <p>{{ title }}</p>
+# This mess does a nice job at creating the logo img tag from external base64.
+echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
+cat logo-base64.txt | tr '\n' '\"'
+echo " />"
+
+cat <<BODY2
+
+        </td>
+      </tr>
+    </table>
+
+    <h2>Table of Contents</h2>
 
     <table border="1" class="contents">
 
@@ -47,4 +64,4 @@ cat <<FOOT
 
   </body>
 </html>
-FOOT
+BODY2

@@ -14,16 +14,31 @@ HEAD
 # CSS inline
 cat "$wipdir/index.css" | sed -e 's/^/        /'
 
-cat <<FOOT
+cat <<BODY1
     </style>
   </head>
 
   <body>
 
-    <h1>{{ pkgid }}</h1>
+    <table class="heading">
+      <tr>
+        <td class="title">
+          <h1>{{ pkgid }}</h1>
+          <p><a href="../contents.html">Table of Contents</a> -
+          <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
+        </td>
+        <td class="logo">
+BODY1
 
-    <p><a href="../contents.html">Table of Contents</a> -
-    <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
+# This mess does a nice job at creating the logo img tag from external base64.
+echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
+cat logo-base64.txt | tr '\n' '\"'
+echo " />"
+
+cat <<BODY2
+        </td>
+      </tr>
+    </table>
 
     <div class="description">
       <p>{{ package["description"] }}</p>
@@ -109,4 +124,4 @@ cat <<FOOT
 
   </body>
 </html>
-FOOT
+BODY2
