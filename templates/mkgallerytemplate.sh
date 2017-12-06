@@ -4,50 +4,43 @@
 
 wipdir=${0%%mkgallerytemplate.sh}
 
-cat <<HEAD
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+#<html>
+#  <head>
+#    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+#
+#    <!-- Enable responsive view on mobile devices -->
+#    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+#
+#    <title>{{ pkgid }}</title>
+#
+#    <style type="text/css">
 
-    <!-- Enable responsive view on mobile devices -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+cat <<CSS1
+{% extends "base.html" %}
 
-    <title>{{ pkgid }}</title>
-
+{% block style_gallery %}
     <style type="text/css">
-HEAD
+CSS1
 
-cat "$wipdir/gallery.css" | sed -e 's/^/        /'
-cat "$wipdir/index.css" | sed -e 's/^/        /'
+$wipdir/mkgallerycss.sh | sed -e 's/^/        /'
 
 cat <<BODY1
     </style>
-  </head>
+{% endblock %}
 
+{% block body %}
   <body class="no-touch">
+{% endblock %}
 
-    <table class="heading">
-      <tbody>
-        <tr>
+{% block title_td %}
           <td class="title">
             <h1>{{ pkgid }}</h1>
             <p><a href="../contents.html">Table of Contents</a> -
             <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
           </td>
-          <td class="logo">
-BODY1
+{% endblock %}
 
-# This mess does a nice job at creating the logo img tag from external base64.
-echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
-cat logo-base64.txt | tr '\n' '\"'
-echo " />"
-
-cat <<BODY2
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+{% block content %}
     <div class="description">
       <p>{{ package["description"] }}</p>
     </div>
@@ -67,6 +60,5 @@ cat <<BODY2
     </div>
     <!-- /#wrap -->
 
-  </body>
-</html>
-BODY2
+{% endblock %}
+BODY1

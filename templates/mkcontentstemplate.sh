@@ -4,42 +4,14 @@
 
 wipdir=${0%%mkcontentstemplate.sh}
 
-cat <<HEAD
-<html>
-  <head>
-    <title>{{ title }}</title>
-    <style type="text/css">
-HEAD
-
-# CSS inline
-cat "$wipdir/index.css" | sed -e 's/^/      /'
-
-cat <<BODY1
-    </style>
-  </head>
-
-  <body>
-
-    <table class="heading">
-      <tbody>
-        <tr>
+cat <<CONTENT
+{% extends "base.html" %}
+{% block title_td %}
           <td class="title">
             <h1>{{ title }}</h1>
           </td>
-          <td class="logo">
-BODY1
-
-# This mess does a nice job at creating the logo img tag from external base64.
-echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
-cat logo-base64.txt | tr '\n' '\"'
-echo " />"
-
-cat <<BODY2
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+{% endblock %}
+{% block content %}
     <h2>Table of Contents</h2>
 
     <table class="contents">
@@ -59,9 +31,8 @@ cat <<BODY2
           <td>{{ packages[package]["description"] }}</td>
         </tr>
       {% endfor %}
+
       </tbody>
     </table>
-
-  </body>
-</html>
-BODY2
+{% endblock %}
+CONTENT
