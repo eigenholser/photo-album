@@ -43,5 +43,6 @@ Run the application like this::
 Editing and Building the Templates
 ----------------------------------
 
-See the README in the templates directory for details.
+See the `README in the templates directory`_ for details.
 
+.. _README in the templates directory: templates/
