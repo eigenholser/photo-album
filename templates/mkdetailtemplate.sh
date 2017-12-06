@@ -6,20 +6,21 @@ wipdir=${0%%mkdetailtemplate.sh}
 
 cat <<BODY1
 {% extends "base.html" %}
-
 {% block title_td %}
           <td class="title">
             <h1>{{ pkgid }}</h1>
             <p><a href="../contents.html">Table of Contents</a> -
             <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
           </td>
-{% endblock %}
-
+{% endblock title_td %}
 {% block content %}
+
+    <h2>Description</h2>
     <div class="description">
       <p>{{ package["description"] }}</p>
     </div>
 
+    <h2>Contents</h2>
     <table class="contents">
 
       <thead>
@@ -41,7 +42,9 @@ cat <<BODY1
       </tbody>
     </table>
 
-    <h2>Package Metadata</h2>
+    <p>&nbsp;</p>
+
+    <h2>Metadata</h2>
 
     <table border="1" class="contents">
       <tr>
@@ -97,5 +100,6 @@ cat <<BODY1
         <td>{{ package["interval"] }}</td>
       </tr>
     </table>
-{% endblock %}
+    <p>&nbsp;<p>
+{% endblock content %}
 BODY2

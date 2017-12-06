@@ -10,7 +10,7 @@ cat <<CONTENT
           <td class="title">
             <h1>{{ title }}</h1>
           </td>
-{% endblock %}
+{% endblock title_td %}
 {% block content %}
     <h2>Table of Contents</h2>
 
@@ -34,5 +34,5 @@ cat <<CONTENT
 
       </tbody>
     </table>
-{% endblock %}
+{% endblock content %}
 CONTENT

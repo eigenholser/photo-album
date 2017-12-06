@@ -13,7 +13,6 @@ cat <<HEAD
 HEAD
 
 # CSS inline
-#cat "$wipdir/index.css" | sed -e 's/^/      /'
 $wipdir/mkindexcss.sh | sed -e 's/^/      /'
 
 cat <<BODY1
@@ -24,15 +23,17 @@ cat <<BODY1
   <body>
 {% endblock %}
 
-    <table class="heading">
-      <tbody>
-        <tr>
-          {% block title_td %}
-          <td class="title">
-            <h1>{{ title }}</h1>
-          </td>
-          {% endblock %}
-          <td class="logo">
+  <div id="container">
+    <div id="content">
+      <table class="heading">
+        <tbody>
+          <tr>
+            {% block title_td %}
+            <td class="title">
+              <h1>{{ title }}</h1>
+            </td>
+            {% endblock %}
+            <td class="logo">
 BODY1
 
 # This mess does a nice job at creating the logo img tag from external base64.
@@ -41,13 +42,20 @@ cat logo-base64.txt | tr '\n' '\"'
 echo " />"
 
 cat <<BODY2
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-    {% block content %}{% endblock %}
+      {% block content %}{% endblock %}
 
+    </div> {# <!-- /#content --> #}
+
+    <div id="footer">
+        <p style="text-align: center;">Crafted with Love by eigenholser</p>
+    </div>
+
+    </div> {# <!-- /#container --> #}
   </body>
 </html>
 BODY2

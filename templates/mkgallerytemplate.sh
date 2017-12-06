@@ -17,7 +17,6 @@ wipdir=${0%%mkgallerytemplate.sh}
 
 cat <<CSS1
 {% extends "base.html" %}
-
 {% block style_gallery %}
     <style type="text/css">
 CSS1
@@ -26,21 +25,20 @@ $wipdir/mkgallerycss.sh | sed -e 's/^/        /'
 
 cat <<BODY1
     </style>
-{% endblock %}
-
+{% endblock style_gallery %}
 {% block body %}
   <body class="no-touch">
-{% endblock %}
-
+{% endblock body %}
 {% block title_td %}
           <td class="title">
             <h1>{{ pkgid }}</h1>
             <p><a href="../contents.html">Table of Contents</a> -
             <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
           </td>
-{% endblock %}
-
+{% endblock title_td %}
 {% block content %}
+
+    <h2>Description</h2>
     <div class="description">
       <p>{{ package["description"] }}</p>
     </div>
@@ -52,13 +50,13 @@ cat <<BODY1
       <div class="box">
         <div class="boxInner">
           <a href="jpeg/{{ photographs[photoid]["filename"] }}"><img src="thumbs/{{ photographs[photoid]["filename"] }}" /></a>
-          <div class="titleBox">thumbs/{{ photographs[photoid]["filename"] }}</div>
+          <div class="titleBox">{{ photoid }}</div>
         </div>
       </div>
       {% endfor %}
 
-    </div>
-    <!-- /#wrap -->
+    </div> {# <!-- /#wrap --> #}
 
-{% endblock %}
+    <p>&nbsp;</p>
+{% endblock content %}
 BODY1

@@ -5,9 +5,12 @@
 wipdir=${0%%mkindexcss.sh}
 
 cat <<CSS1
+html,
 body {
+    margin:0;
+    padding:0;
+    height:100%;
     font-family: sans-serif;
-    padding: 2%;
 CSS1
 
 # This mess does a nice job at creating the logo img tag from external base64.
@@ -18,6 +21,31 @@ echo "}"
 echo
 
 cat <<CSS2
+
+#container {
+    min-height:100%;
+    position:relative;
+}
+
+#header {
+    background:#ff0;
+    padding:10px;
+}
+
+#content {
+    padding:10px;
+    padding-bottom:60px;   /* Height of the footer */
+}
+
+#footer {
+    border-top: 1px solid black;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    height:64px;   /* Height of the footer */
+    background:#ccc;
+}
+
 h1 h2 h3 h4 h5 h6 p {
     font-family: sans-serif;
 }

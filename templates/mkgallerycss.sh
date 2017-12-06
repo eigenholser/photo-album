@@ -5,24 +5,18 @@
 wipdir=${0%%mgallerycss.sh}
 
 cat <<CSS
-body {
-    /*
-    padding: 0;
-    margin: 0;
-    background: #EEE;
-    font: 12px/15px 'Lucida Sans',sans-serif;
-    */
-}
 .wrap {
     overflow: hidden;
     margin: 0px;
 }
+
 .box {
     float: left;
     position: relative;
     width: 20%;
     padding-bottom: 20%;
 }
+
 .boxInner {
     position: absolute;
     left: 10px;
@@ -31,9 +25,11 @@ body {
     bottom: 10px;
     overflow: hidden;
 }
+
 .boxInner img {
     height: 100%;
 }
+
 .boxInner .titleBox {
     position: absolute;
     bottom: 0;
@@ -50,10 +46,13 @@ body {
     -o-transition: all 0.3s ease-out;
     transition: all 0.3s ease-out;
 }
+
 body.no-touch .boxInner:hover .titleBox,
+
 body.touch .boxInner.touchFocus .titleBox {
     margin-bottom: 0;
 }
+
 @media only screen and (max-width : 480px) {
     /* Smartphone view: 1 tile */
     .box {
@@ -61,6 +60,7 @@ body.touch .boxInner.touchFocus .titleBox {
         padding-bottom: 100%;
     }
 }
+
 @media only screen and (max-width : 650px) and (min-width : 481px) {
     /* Tablet view: 2 tiles */
     .box {
@@ -68,6 +68,7 @@ body.touch .boxInner.touchFocus .titleBox {
         padding-bottom: 50%;
     }
 }
+
 @media only screen and (max-width : 1050px) and (min-width : 651px) {
     /* Small desktop / ipad view: 3 tiles */
     .box {
@@ -75,6 +76,7 @@ body.touch .boxInner.touchFocus .titleBox {
         padding-bottom: 33.3%;
     }
 }
+
 @media only screen and (max-width : 1290px) and (min-width : 1051px) {
     /* Medium desktop: 4 tiles */
     .box {

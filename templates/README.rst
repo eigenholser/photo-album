@@ -41,5 +41,12 @@ Editing the Templates and CSS
 The templates must be edited inside the shell scripts. Once the changes are
 complete, rebuild the templates as described in the first paragraph above.
 
+Footer
+------
+
+Just so I don't forget, the footer was implemented using  excellent pattern
+from `Matthew James Taylor`_
+
 
 .. _Jinja2: http://jinja.pocoo.org/
+.. _Matthew James Taylor: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page
