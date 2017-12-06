@@ -38,6 +38,7 @@ cat <<CSS2
 }
 
 #footer {
+    color: #fff;
     border-top: 1px solid black;
     position:absolute;
     bottom:0;
