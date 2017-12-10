@@ -15,8 +15,8 @@ CSS1
 
 # This mess does a nice job at creating the logo img tag from external base64.
 echo -n "    background-image: url(data:image/png;base64,"
-cat ${wipdir}/background-base64.txt | tr '\n' ')'
-echo ";"
+cat ${wipdir}/background-base64.txt
+echo ");"
 echo "}"
 echo
 

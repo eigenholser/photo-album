@@ -17,6 +17,14 @@ $wipdir/mkindexcss.sh | sed -e 's/^/      /'
 
 cat <<BODY1
     </style>
+BODY1
+
+# This mess does a nice job at creating the logo img tag from external base64.
+echo -n "<link rel=\"icon\" type=\"image/x-icon\" href=\"data:image/x-icon;base64,"
+cat favicon-base64.txt
+echo "\" />"
+
+cat <<BODY2
   </head>
 
 {% block body %}
@@ -34,14 +42,14 @@ cat <<BODY1
             </td>
             {% endblock %}
             <td class="logo">
-BODY1
+BODY2
 
 # This mess does a nice job at creating the logo img tag from external base64.
 echo -n "<img alt=\"Logo Image\" height=\"92\" src=\"data:image/png;base64,"
-cat logo-base64.txt | tr '\n' '\"'
-echo " />"
+cat logo-base64.txt
+echo "\" />"
 
-cat <<BODY2
+cat <<BODY3
             </td>
           </tr>
         </tbody>
@@ -58,4 +66,4 @@ cat <<BODY2
     </div> {# <!-- /#container --> #}
   </body>
 </html>
-BODY2
+BODY3
