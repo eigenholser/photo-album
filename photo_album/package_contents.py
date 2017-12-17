@@ -27,6 +27,7 @@ class PackageContents(object):
 
     def photograph_description(self):
         """
+        Get description for each photograph.
         """
         query = "SELECT * FROM photographs WHERE pkgid=?"
         self.conn.row_factory = sqlite3.Row
