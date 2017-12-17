@@ -10,7 +10,9 @@
 
     <h2>Description</h2>
     <div class="description">
-      <p>{{ package["description"] }}</p>
+      {% for paragraph in package["description"] %}
+      <p>{{ paragraph }}</p>
+      {% endfor %}
     </div>
 
     <h2>Contents</h2>
@@ -45,51 +47,51 @@
         <td class="metaval">{{ package["pkg_date"] }}</td>
       </tr>
       <tr>
-        <td>Location</td>
+        <td class="metakey">Location</td>
         <td>{{ package["location"] }}</td>
       </tr>
       <tr>
-        <td>Subjects</td>
+        <td class="metakey">Subjects</td>
         <td>{{ package["subjects"] }}</td>
       </tr>
       <tr>
-        <td>Media Type</td>
+        <td class="metakey">Media Type</td>
         <td>{{ package["media_type"] }}</td>
       </tr>
       <tr>
-        <td>Media Format</td>
+        <td class="metakey">Media Format</td>
         <td>{{ package["media_fmt"] }}</td>
       </tr>
       <tr>
-        <td>Media Status</td>
+        <td class="metakey">Media Status</td>
         <td>{{ package["media_status"] }}</td>
       </tr>
       <tr>
-        <td>Film</td>
+        <td class="metakey">Film</td>
         <td>{{ package["film"] }}</td>
       </tr>
       <tr>
-        <td>Sequence</td>
+        <td class="metakey">Sequence</td>
         <td>{{ package["sequence"] }}</td>
       </tr>
       <tr>
-        <td>Frames</td>
+        <td class="metakey">Frames</td>
         <td>{{ package["frames"] }}</td>
       </tr>
       <tr>
-        <td>Pieces</td>
+        <td class="metakey">Pieces</td>
         <td>{{ package["pieces"] }}</td>
       </tr>
       <tr>
-        <td>Sheets</td>
+        <td class="metakey">Sheets</td>
         <td>{{ package["sheets"] }}</td>
       </tr>
       <tr>
-        <td>Set Datetime</td>
+        <td class="metakey">Set Datetime</td>
         <td>{{ package["set_datetime"] }}</td>
       </tr>
       <tr>
-        <td>Interval Datetime</td>
+        <td class="metakey">Interval Datetime</td>
         <td>{{ package["interval"] }}</td>
       </tr>
     </table>

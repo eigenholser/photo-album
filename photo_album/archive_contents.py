@@ -1,4 +1,5 @@
 import os
+import re
 import sqlite3
 from photo_album.packages_list import PackagesList
 
@@ -37,7 +38,20 @@ class ArchiveContents(object):
 
         for pkg in rows:
             for row_name in row_list:
-                self.contents[pkg["pkgid"]][row_name] = pkg[row_name]
+                if row_name == "description":
+                    self.contents[pkg["pkgid"]][row_name] = \
+                            self.split_description(pkg[row_name])
+                else:
+                    self.contents[pkg["pkgid"]][row_name] = pkg[row_name]
+
+    def split_description(self, description):
+        """
+        Split description on linefeeds into list so we can have paragraphs.
+        """
+        # Replace two newlines with possible whitespace with single newline.
+        # TODO: What about 3 or more newlines?
+        paragraphs = re.sub(r'\s*\n\s*\n\s*', '\n', description)
+        return paragraphs.splitlines()
 
     def keys(self):
         return sorted([pkgid for pkgid in self.contents.keys()])

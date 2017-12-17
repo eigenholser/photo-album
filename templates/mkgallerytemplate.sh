@@ -40,7 +40,9 @@ cat <<BODY1
 
     <h2>Description</h2>
     <div class="description">
-      <p>{{ package["description"] }}</p>
+      {% for paragraph in package["description"] %}
+      <p>{{ paragraph }}</p>
+      {% endfor %}
     </div>
 
     <div class="wrap">

@@ -21,7 +21,8 @@
       {% for package in packages.keys() %}
         <tr>
           <td><a href="{{ package }}/gallery.html" title="{{ package }}">{{ package }}</a></td>
-          <td>{{ packages[package]["description"] }}</td>
+          {# Don't implement paragraphs here. Just join the text. #}
+          <td>{% for paragraph in packages[package]["description"] %}{{ paragraph }}&nbsp;{% endfor %}</td>
         </tr>
       {% endfor %}
 
