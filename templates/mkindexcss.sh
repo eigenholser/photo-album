@@ -130,6 +130,8 @@ table.contents td {
 
 table.contents td.metakey {
     width: 10%;
+    background: #fff;
+    font-weight: bold;
 }
 
 table.contents td.metaval {
