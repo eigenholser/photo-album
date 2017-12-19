@@ -18,10 +18,7 @@ class Package(AlbumBase):
             } for k in self.photographs
         }
 
-        build_dir = config.get('album', 'build_directory')
-        db_file = config.get('album', 'packages_database')
-        db_dir = "{}/database".format(build_dir)
-        self.conn = sqlite3.connect(os.path.join(db_dir, db_file))
+        super().__init__(config)
         self.photograph_description()
 
     def photograph_description(self):
