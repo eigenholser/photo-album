@@ -29,14 +29,12 @@ cat <<BODY1
 {% block body %}
   <body class="no-touch">
 {% endblock body %}
-{% block title_td %}
-          <td class="title">
+{% block title %}
             <h1>{{ pkgid }}</h1>
-            <p><a href="../contents.html">Table of Contents</a> -
-            <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
-          </td>
-{% endblock title_td %}
+{% endblock title %}
 {% block content %}
+    <p><a href="../contents.html">Table of Contents</a> -
+    <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>
 
     <h2>Description</h2>
     <div class="description">

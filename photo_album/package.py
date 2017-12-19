@@ -1,12 +1,11 @@
 import os
 import sqlite3
 from photo_album.photographs_list import PhotographsList
+from photo_album.common import AlbumBase
 
-class PackageContents(object):
+class Package(object):
     """
-    Complete contents of the distribution archcive.
-
-    TODO: Naming issue here: Archive or Distribution? Both okey?
+    Contents of the package with metadata.
     """
 
     def __init__(self, config, package):
@@ -44,3 +43,15 @@ class PackageContents(object):
     def __getitem__(self, key):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.
         return self.contents[key]
+
+    def photographs_on_disk(self, dist_dir, package):
+        """
+        Read list of photographs from package on disk.
+        """
+        file_list = self.photographs_list = sorted(
+            [file for file in os.listdir(
+                    os.path.join(dist_dir, package, 'jpeg'))
+                if not os.path.isdir(os.path.join(dist_dir, package, file))])
+
+        self.photographs = [
+            file for file in file_list if os.path.splitext(file)[1] == ".jpg"]

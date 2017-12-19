@@ -1,5 +1,5 @@
 from .utils import logged_class, CustomArgumentParser
-from .archive_contents import ArchiveContents
-from .package_contents import PackageContents
+from .album import Album
+from .package import Package
 
 __version__ = "0.1"

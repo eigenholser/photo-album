@@ -12,7 +12,15 @@ cat <<CONTENT
           </td>
 {% endblock title_td %}
 {% block content %}
-    <h2>Table of Contents</h2>
+
+    <h2>Description</h2>
+    <div class="description">
+      {% for paragraph in description %}
+      <p>{{ paragraph }}</p>
+      {% endfor %}
+    </div>
+
+    <h2>Contents</h2>
 
     <table class="contents">
 
@@ -35,5 +43,6 @@ cat <<CONTENT
 
       </tbody>
     </table>
+    <p>&nbsp;</p>
 {% endblock content %}
 CONTENT

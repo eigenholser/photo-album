@@ -8,14 +8,14 @@ import re
 import sqlite3
 import stat
 import sys
-from photo_album import (ArchiveContents, PackageContents, CustomArgumentParser)
+from photo_album import (Album, Package, CustomArgumentParser)
 
 
 logger = logging.getLogger(__name__)
 
 
 def mk_archive_contents(config):
-    contents = ArchiveContents(config)
+    album = Album(config)
     build_dir = config.get('album', 'build_directory')
     dist_dir = config.get('album', 'dist_directory')
     template_dir = "{}/templates".format(build_dir)
@@ -24,9 +24,11 @@ def mk_archive_contents(config):
         loader=PackageLoader("photo_album", package_path="templates"),
         autoescape=select_autoescape(['html'])
     )
+
     template_vars = {
-        "title": contents_title,
-        "packages": contents,
+        "title": album.title,
+        "description": album.description,
+        "packages": album
     }
 
     template = env.get_template('contents.html')
@@ -37,13 +39,13 @@ def mk_archive_contents(config):
 
 
 def mk_package_contents(config):
-    packages = ArchiveContents(config)
+    packages = Album(config)
     build_dir = config.get('album', 'build_directory')
     dist_dir = config.get('album', 'dist_directory')
     template_dir = "{}/templates".format(build_dir)
 
-    for package in packages.keys():
-        contents = PackageContents(config, package)
+    for pkgid in packages.keys():
+        package = Package(config, pkgid)
 
         env = Environment(
             loader=PackageLoader("photo_album", package_path="templates"),
@@ -51,20 +53,20 @@ def mk_package_contents(config):
         )
 
         template_vars = {
-            "pkgid": package,
-            "photographs": contents,
-            "package": packages[package],
+            "pkgid": pkgid,
+            "photographs": package,
+            "package": packages[pkgid],
         }
 
         detail_template = env.get_template('detail.html')
         gallery_template = env.get_template('gallery.html')
 
-        logger.info("Writing package {}/detail.html".format(package))
-        with open(os.path.join(dist_dir, package, 'detail.html'), 'w') as f:
+        logger.info("Writing package {}/detail.html".format(pkgid))
+        with open(os.path.join(dist_dir, pkgid, 'detail.html'), 'w') as f:
             f.write(detail_template.render(template_vars))
 
-        logger.info("Writing package {}/gallery.html".format(package))
-        with open(os.path.join(dist_dir, package, 'gallery.html'), 'w') as f:
+        logger.info("Writing package {}/gallery.html".format(pkgid))
+        with open(os.path.join(dist_dir, pkgid, 'gallery.html'), 'w') as f:
             f.write(gallery_template.render(template_vars))
 
 

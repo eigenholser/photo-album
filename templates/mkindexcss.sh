@@ -23,26 +23,40 @@ echo
 cat <<CSS2
 
 #container {
-    min-height:100%;
-    position:relative;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-#header {
-    background:#ff0;
-    padding:10px;
+main {
+    flex: 1;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
-#content {
-    padding:10px;
-    padding-bottom:60px;   /* Height of the footer */
+header {
+    color: #fff;
+    border-bottom: 1px solid black;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5);
 }
 
-#footer {
+header img {
+    position: relative;
+    vertical-align: middle;
+    float: right;
+    padding-right: 10px;
+}
+
+header h1 {
+    margin-left: 0.5em;
+    line-height: 100px; /* same as header height */
+    display: inline;
+}
+
+footer {
     color: #fff;
     border-top: 1px solid black;
-    position:absolute;
-    bottom:0;
-    width:100%;
     height:64px;   /* Height of the footer */
     background: rgba(0, 0, 0, 0.5);
 }
@@ -91,21 +105,6 @@ a:hover {
 /* Selected link  Revell 37112 (Yellow) Anna */
 a:active {
     color: #ffd64d;
-}
-
-table.heading {
-    width: 100%;
-    table-layout: fixed;
-}
-
-table.heading td.title {
-    width: 80%;
-    vertical-align: top;
-}
-
-table.heading td.logo {
-    width: 20%;
-    text-align: right;
 }
 
 table.contents {

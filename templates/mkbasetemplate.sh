@@ -32,16 +32,10 @@ cat <<BODY2
 {% endblock %}
 
   <div id="container">
-    <div id="content">
-      <table class="heading">
-        <tbody>
-          <tr>
-            {% block title_td %}
-            <td class="title">
-              <h1>{{ title }}</h1>
-            </td>
-            {% endblock %}
-            <td class="logo">
+    <header>
+      {% block title %}
+        <h1>{{ title }}</h1>
+      {% endblock title %}
 BODY2
 
 # This mess does a nice job at creating the logo img tag from external base64.
@@ -50,18 +44,17 @@ cat logo-base64.txt
 echo "\" />"
 
 cat <<BODY3
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    </header>
+
+    <main>
 
       {% block content %}{% endblock %}
 
-    </div> {# <!-- /#content --> #}
+    </main>
 
-    <div id="footer">
+    <footer>
         <p style="text-align: center;">Crafted with Love by eigenholser</p>
-    </div>
+    </footer>
 
     </div> {# <!-- /#container --> #}
   </body>

@@ -1,12 +1,10 @@
 {% extends "base.html" %}
-{% block title_td %}
-          <td class="title">
+{% block title %}
             <h1>{{ pkgid }}</h1>
-            <p><a href="../contents.html">Table of Contents</a> -
-            <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
-          </td>
-{% endblock title_td %}
+{% endblock title %}
 {% block content %}
+    <p><a href="../contents.html">Table of Contents</a> -
+    <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
 
     <h2>Description</h2>
     <div class="description">

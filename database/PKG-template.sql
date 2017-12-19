@@ -26,6 +26,7 @@ DELETE FROM photographs WHERE pkgid="PKGID";
 INSERT INTO photographs VALUES (
     /* pkgid */         'PKGID',
     /* photoid */       'PKGID-F00',
+    /* poi */           0,
     /* description */   ''
 );
 

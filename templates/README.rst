@@ -45,8 +45,9 @@ Footer
 ------
 
 Just so I don't forget, the footer was implemented using  excellent pattern
-from `Matthew James Taylor`_
+from `Stackoverflow`_
 
 
 .. _Jinja2: http://jinja.pocoo.org/
 .. _Matthew James Taylor: http://matthewjamestaylor.com/blog/keeping-footers-at-the-bottom-of-the-page
+.. _Stackoverflow: https://stackoverflow.com/questions/7123138/how-to-make-this-header-content-footer-layout-using-css

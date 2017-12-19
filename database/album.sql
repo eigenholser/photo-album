@@ -1,3 +1,14 @@
+/*
+The plural table name `albums' is a misnomer. There will only ever be one
+album. That is the design. One SQLite database per photo album. But the
+plural naming convention is observed anyway because not doing so would make my
+skin crawl.
+*/
+CREATE TABLE albums (
+    albumid         varchcar(50),
+    description     text
+);
+
 CREATE TABLE packages (
     pkgid           varchar(50),
     pkg_date        varchar(50),
@@ -21,6 +32,7 @@ CREATE UNIQUE INDEX packages_pkgid ON packages(pkgid);
 CREATE TABLE photographs (
     pkgid           varchar(50),
     photoid         varchar(50),
+    poi             boolean,            /* photograph of interest */
     description     text,
     FOREIGN KEY(pkgid) REFERENCES packages(pkgid)
 );
