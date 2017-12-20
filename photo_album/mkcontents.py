@@ -17,9 +17,9 @@ logger = logging.getLogger(__name__)
 def mk_archive_contents(config):
     album = Album(config)
     build_dir = config.get('album', 'build_directory')
-    dist_dir = config.get('album', 'dist_directory')
+    album_dir = config.get('album', 'album_directory')
     template_dir = "{}/templates".format(build_dir)
-    contents_title = config.get('album', 'title')
+    #contents_title = config.get('album', 'title')
     env = Environment(
         loader=PackageLoader("photo_album", package_path="templates"),
         autoescape=select_autoescape(['html'])
@@ -34,14 +34,14 @@ def mk_archive_contents(config):
     template = env.get_template('contents.html')
 
     logger.info("Writing /contents.html")
-    with open(os.path.join(dist_dir, 'contents.html'), 'w') as f:
+    with open(os.path.join(album_dir, 'contents.html'), 'w') as f:
         f.write(template.render(template_vars))
 
 
 def mk_package_contents(config):
     packages = Album(config)
     build_dir = config.get('album', 'build_directory')
-    dist_dir = config.get('album', 'dist_directory')
+    album_dir = config.get('album', 'album_directory')
     template_dir = "{}/templates".format(build_dir)
 
     for pkgid in packages.keys():
@@ -62,11 +62,11 @@ def mk_package_contents(config):
         gallery_template = env.get_template('gallery.html')
 
         logger.info("Writing package {}/detail.html".format(pkgid))
-        with open(os.path.join(dist_dir, pkgid, 'detail.html'), 'w') as f:
+        with open(os.path.join(album_dir, pkgid, 'detail.html'), 'w') as f:
             f.write(detail_template.render(template_vars))
 
         logger.info("Writing package {}/gallery.html".format(pkgid))
-        with open(os.path.join(dist_dir, pkgid, 'gallery.html'), 'w') as f:
+        with open(os.path.join(album_dir, pkgid, 'gallery.html'), 'w') as f:
             f.write(gallery_template.render(template_vars))
 
 

@@ -10,9 +10,9 @@ class AlbumBase(object):
 
     def __init__(self, config):
         build_dir = config.get('album', 'build_directory')
-        db_file = config.get('album', 'packages_database')
-        db_dir = "{}/database".format(build_dir)
-        self.conn = sqlite3.connect(os.path.join(db_dir, db_file))
+        db_file = config.get('album', 'album_database')
+        #db_dir = "{}/database".format(build_dir)
+        self.conn = sqlite3.connect(db_file)
 
     def split_description(self, description):
         """

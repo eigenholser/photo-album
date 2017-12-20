@@ -62,7 +62,7 @@ class Album(AlbumBase):
         """
         Read packages present in album directory on disk.
         """
-        dist_dir = config.get('album', 'dist_directory')
+        album_dir = config.get('album', 'album_directory')
 
-        self.package_list = sorted([file for file in os.listdir(dist_dir)
-                if os.path.isdir(os.path.join(dist_dir, file))])
+        self.package_list = sorted([file for file in os.listdir(album_dir)
+                if os.path.isdir(os.path.join(album_dir, file))])
