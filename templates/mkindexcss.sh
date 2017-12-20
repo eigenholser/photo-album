@@ -38,7 +38,7 @@ header {
     color: #fff;
     border-bottom: 1px solid black;
     height: 100px;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 header img {
@@ -58,7 +58,7 @@ footer {
     color: #fff;
     border-top: 1px solid black;
     height:64px;   /* Height of the footer */
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 h1 h2 h3 h4 h5 h6 p {
