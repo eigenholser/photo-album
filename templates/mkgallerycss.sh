@@ -31,7 +31,7 @@ cat <<CSS
 }
 
 .gallery-poi {
-    box-shadow: 0 0 1em #127826;
+    box-shadow: 0 0 1em #f23b1c;
 }
 
 .boxInner .titleBox {
