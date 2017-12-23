@@ -30,6 +30,10 @@ cat <<CSS
     height: 100%;
 }
 
+.gallery-poi {
+    box-shadow: 0 0 1em #127826;
+}
+
 .boxInner .titleBox {
     position: absolute;
     bottom: 0;

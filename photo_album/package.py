@@ -33,6 +33,7 @@ class Package(AlbumBase):
         for photo in rows:
             self.contents[photo["photoid"]]["description"] = \
                     photo["description"]
+            self.contents[photo["photoid"]]["poi"] = photo["poi"]
 
     def keys(self):
         return sorted([photoid for photoid in self.contents.keys()])

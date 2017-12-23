@@ -26,6 +26,7 @@ cat <<BODY1
       <thead>
         <tr>
           <th class="photoid" >Photograph ID</th>
+          <th class="detail-poi">*</th>
           <th class="notes">Description</th>
         </tr>
       </thead>
@@ -35,6 +36,7 @@ cat <<BODY1
       {% for photoid in photographs.keys() %}
         <tr>
           <td><a href="jpeg/{{ photographs[photoid]["filename"] }}" title="{{ photoid }}">{{ photoid }}</a></td>
+          <td>{% if photographs[photoid]["poi"] == 1 %}*{% else %}&nbsp;{% endif %}</td>
           <td>{{ photographs[photoid]["description"] }}</td>
         </tr>
       {% endfor %}

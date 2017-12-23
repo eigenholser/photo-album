@@ -150,8 +150,12 @@ table.contents th.photoid {
     width: 10%;
 }
 
+table.contents th.detail-poi {
+    width: 1%;
+}
+
 table.contents th.notes {
-    width: 90%;
+    width: 89%;
 }
 
 /* CONTENTS page */

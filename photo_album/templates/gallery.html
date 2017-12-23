@@ -26,6 +26,10 @@
             height: 100%;
         }
         
+        .gallery-poi {
+            box-shadow: 0 0 1em #127826;
+        }
+        
         .boxInner .titleBox {
             position: absolute;
             bottom: 0;
@@ -104,7 +108,7 @@
       <!-- Define all of the tiles: -->
       {% for photoid in photographs.keys() %}
       <div class="box">
-        <div class="boxInner">
+        <div class="boxInner {% if photographs[photoid]["poi"] == 1 %}gallery-poi{% endif %}">
           <a href="jpeg/{{ photographs[photoid]["filename"] }}"><img src="thumbs/{{ photographs[photoid]["filename"] }}" /></a>
           <div class="titleBox">{{ photoid }}</div>
         </div>
