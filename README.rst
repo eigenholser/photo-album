@@ -47,4 +47,7 @@ See the `README in the templates directory`_ for details.
 
 .. _database schema: database/
 .. _README in the templates directory: templates/
-
+.. _Make <h1> Vertically Center with CSS: https://stackoverflow.com/a/29504662
+.. _How to align an image side by side with a heading element?: https://stackoverflow.com/a/29504662
+.. _How to make this Header/Content/Footer layout using CSS?: https://codepen.io/enjikaka/pen/zxdYjX
+.. _Anser to question #7123138 on Stack Overflow: https://codepen.io/enjikaka/pen/zxdYjX
