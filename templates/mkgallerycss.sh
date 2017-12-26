@@ -41,7 +41,7 @@ cat <<CSS
     right: 0;
     margin-bottom: -50px;
     background: #000;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.39);
     color: #FFF;
     padding: 10px;
     text-align: center;
