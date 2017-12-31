@@ -48,7 +48,7 @@ cat <<BODY1
 
     <h2>Metadata</h2>
 
-    <table border="1" class="contents">
+    <table border="1" class="metadata">
       <tr>
         <td class="metakey">Date</td>
         <td class="metaval">{{ package["pkg_date"] }}</td>

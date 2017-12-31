@@ -46,7 +46,7 @@ echo "\" />"
 cat <<BODY3
     </header>
 
-    <main>
+    <main class="instaFade">
 
       {% block content %}{% endblock %}
 

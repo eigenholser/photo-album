@@ -5,12 +5,13 @@
 wipdir=${0%%mkindexcss.sh}
 
 cat <<CSS1
-html,
-body {
+html, body {
     margin:0;
     padding:0;
     height:100%;
     font-family: sans-serif;
+    font-size: 16px;
+}
 CSS1
 
 # TODO: Removed this in favor of plain background. Leaving for now in case I
@@ -39,7 +40,7 @@ main {
 
 header {
     color: #fff;
-    border-bottom: 1px solid black;
+    border-bottom: 2px solid black;
     height: 100px;
     background: rgba(0, 0, 0, 0.4);
 }
@@ -59,7 +60,7 @@ header h1 {
 
 footer {
     color: #fff;
-    border-top: 1px solid black;
+    border-top: 2px solid black;
     height:64px;   /* Height of the footer */
     background: rgba(0, 0, 0, 0.4);
 }
@@ -110,6 +111,7 @@ a:active {
     color: #ffd64d;
 }
 
+/* Contents tables on main contents page and detail page. */
 table.contents {
     width: 100%;
     table-layout: fixed;
@@ -128,16 +130,6 @@ table.contents td {
     text-overflow: ellipsis;
     text-align: left;
     padding-left: 0.5em;
-}
-
-table.contents td.metakey {
-    width: 10%;
-    background: #fff;
-    font-weight: bold;
-}
-
-table.contents td.metaval {
-    width: 90%;
 }
 
 table.contents th {
@@ -162,6 +154,38 @@ table.contents th.notes {
     width: 89%;
 }
 
+/* Metadata table on detail page */
+table.metadata {
+    width: 100%;
+    table-layout: fixed;
+    white-space: nowrap;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: 0 0 1em #888;
+}
+
+table.metadata td {
+    border: 1px solid #ccc;
+    padding: .1em .25em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+    padding-left: 0.5em;
+}
+
+table.metadata td.metakey {
+    width: 10%;
+    background: #606060;
+    color: #f0f0f0;
+    font-weight: bold;
+}
+
+table.metadata td.metaval {
+    width: 90%;
+}
+
 /* CONTENTS page */
 table.contents th.packageid {
     width: 10%;
@@ -171,6 +195,136 @@ table.contents th.description {
     width: 90%;
 }
 
+/* Alternate row highlights for clarity */
+table.contents tr:nth-child(even) {
+    /* background-color: #000000; */
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/*
 table.contents tbody tr.even { background-color: #fcfcfc }
 table.contents tbody tr.odd { background-color: #f7f7f7 }
+*/
+
+/* Fading behavior */
+@-webkit-keyframes reset {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes reset {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@-moz-keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes reset {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.instaFade {
+    -webkit-animation-name: reset, fade-in;
+    -webkit-animation-duration: 1.5s;
+    -webkit-animation-timing-function: ease-in;
+
+    -moz-animation-name: reset, fade-in;
+    -moz-animation-duration: 1.5s;
+    -moz-animation-timing-function: ease-in;
+
+    animation-name: reset, fade-in;
+    animation-duration: 1.5s;
+    animation-timing-function: ease-in;
+}
+
+.quickFade {
+    -webkit-animation-name: reset, fade-in;
+    -webkit-animation-duration: 2.5s;
+    -webkit-animation-timing-function: ease-in;
+
+    -moz-animation-name: reset, fade-in;
+    -moz-animation-duration: 2.5s;
+    -moz-animation-timing-function: ease-in;
+
+    animation-name: reset, fade-in;
+    animation-duration: 2.5s;
+    animation-timing-function: ease-in;
+}
+
+.delayOne {
+    -webkit-animation-delay: 0, .5s;
+    -moz-animation-delay: 0, .5s;
+    animation-delay: 0, .5s;
+}
+
+.delayTwo {
+    -webkit-animation-delay: 0, 1s;
+    -moz-animation-delay: 0, 1s;
+    animation-delay: 0, 1s;
+}
+
+.delayThree {
+    -webkit-animation-delay: 0, 1.5s;
+    -moz-animation-delay: 0, 1.5s;
+    animation-delay: 0, 1.5s;
+}
+
+.delayFour {
+    -webkit-animation-delay: 0, 2s;
+    -moz-animation-delay: 0, 2s;
+    animation-delay: 0, 2s;
+}
+
+.delayFive {
+    -webkit-animation-delay: 0, 2.5s;
+    -moz-animation-delay: 0, 2.5s;
+    animation-delay: 0, 2.5s;
+}
 CSS2
