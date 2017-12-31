@@ -28,7 +28,7 @@
 
       {% for photoid in photographs.keys() %}
         <tr>
-          <td><a href="jpeg/{{ photographs[photoid]["filename"] }}" title="{{ photoid }}">{{ photoid }}</a></td>
+          <td><a href="jpeg/{{ photographs[photoid]["filename"] }}" title="{{ photographs[photoid]["description"] }}">{{ photoid }}</a></td>
           <td>{% if photographs[photoid]["poi"] == 1 %}*{% else %}&nbsp;{% endif %}</td>
           <td>{{ photographs[photoid]["description"] }}</td>
         </tr>
