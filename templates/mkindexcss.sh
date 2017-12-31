@@ -42,7 +42,7 @@ header {
     color: #fff;
     border-bottom: 2px solid black;
     height: 100px;
-    background: rgba(0, 0, 0, 0.4);
+    background: #008fef;
 }
 
 header img {
@@ -62,7 +62,7 @@ footer {
     color: #fff;
     border-top: 2px solid black;
     height:64px;   /* Height of the footer */
-    background: rgba(0, 0, 0, 0.4);
+    background: #008fef;
 }
 
 h1 h2 h3 h4 h5 h6 p {
