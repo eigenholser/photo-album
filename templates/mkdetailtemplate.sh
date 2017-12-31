@@ -16,7 +16,7 @@ cat <<BODY1
     <h2>Description</h2>
     <div class="description">
       {% for paragraph in package["description"] %}
-      <p>{{ paragraph }}</p>
+      <p>{{ paragraph|safe }}</p>
       {% endfor %}
     </div>
 

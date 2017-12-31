@@ -16,7 +16,7 @@ cat <<CONTENT
     <h2>Description</h2>
     <div class="description">
       {% for paragraph in description %}
-      <p>{{ paragraph }}</p>
+      <p>{{ paragraph|safe }}</p>
       {% endfor %}
     </div>
 
@@ -37,7 +37,7 @@ cat <<CONTENT
         <tr>
           <td><a href="{{ package }}/gallery.html" title="{{ package }}">{{ package }}</a></td>
           {# Don't implement paragraphs here. Just join the text. #}
-          <td>{% for paragraph in packages[package]["description"] %}{{ paragraph }}&nbsp;{% endfor %}</td>
+          <td>{% for paragraph in packages[package]["description"] %}{{ paragraph|safe }}&nbsp;{% endfor %}</td>
         </tr>
       {% endfor %}
 
