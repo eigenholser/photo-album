@@ -13,12 +13,15 @@ body {
     font-family: sans-serif;
 CSS1
 
+# TODO: Removed this in favor of plain background. Leaving for now in case I
+# change my mind.
+#
 # This mess does a nice job at creating the logo img tag from external base64.
-echo -n "    background-image: url(data:image/png;base64,"
-cat ${wipdir}/background-base64.txt
-echo ");"
-echo "}"
-echo
+#echo -n "    background-image: url(data:image/png;base64,"
+#cat ${wipdir}/background-base64.txt
+#echo ");"
+#echo "}"
+#echo
 
 cat <<CSS2
 
@@ -114,7 +117,7 @@ table.contents {
     border: 1px solid #ccc;
     border-collapse: collapse;
     border-spacing: 0;
-    box-shadow: 0 0 1em #eee; /* from pre.contents */
+    box-shadow: 0 0 1em #888;
 }
 
 table.contents td {
@@ -140,9 +143,10 @@ table.contents td.metaval {
 table.contents th {
     border: 1px solid #bbb;
     padding: .1em .25em;
-    background-color: #f7f7f7;
+    background-color: #606060;
     text-align: left;
     padding-left: 0.5em;
+    color: #f0f0f0;
 }
 
 /* DETAIL page */
