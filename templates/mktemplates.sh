@@ -6,10 +6,12 @@ templates_dir="$wipdir/../photo_album/templates"
 echo "Creating templates..."
 
 echo "index.css"
-$wipdir/mkindexcss.sh > index.css
+# CSS inline
+$wipdir/node_modules/.bin/stylus --compress < index.styl > index.css
 
 echo "gallery.css"
-$wipdir/mkgallerycss.sh > gallery.css
+# CSS inline
+$wipdir/node_modules/.bin/stylus --compress < gallery.styl > gallery.css
 
 echo "base.html"
 $wipdir/mkbasetemplate.sh > "${templates_dir}/base.html"

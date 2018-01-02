@@ -1,0 +1,265 @@
+@import "values.styl"
+@import "functions.styl"
+
+html,
+body
+  margin: 0
+  padding: 0
+  height: 100%
+  font-family: sans-serif
+  font-size: 16px
+
+#container
+  height: 100vh
+  display: flex
+  flex-direction: column
+
+main
+  flex: 1
+  padding-left: 10px
+  padding-right: 10px
+
+header
+  color: header-color
+  border-bottom: 2px solid #000
+  height: header-height
+  background: header-background
+
+header img
+  position: relative
+  vertical-align: middle
+  float: right
+  padding-right: 10px
+
+header h1
+  margin-left: 0.5em
+  line-height: header-height
+  display: inline
+
+footer
+  color: footer-color
+  border-top: 2px solid #000
+  height: footer-height
+  background: footer-background
+
+h1 h2 h3 h4 h5 h6 p
+  font-family: sans-serif
+
+code
+  background-color: #eee
+
+li
+  line-height: 1.5em
+
+pre
+  margin-left: 1em
+  margin-right: 1em
+  background-color: #eee
+  padding: 0.5em
+  white-space: pre-wrap; /* CSS 3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word; /* Internet Explorer 5.5+ */
+
+a:link
+  color: link-color
+
+a:visited
+  color: link-color-visited
+
+a:hover
+  color: link-color-hover
+
+a:active
+  color: link-color-active
+
+/* Contents tables on main contents page and detail page. */
+table
+  width: 100%
+  table-layout: fixed
+  white-space: nowrap
+  border: table-border
+  border-collapse: collapse
+  border-spacing: 0
+  box-shadow: box-shadow
+
+/*
+table.contents
+  width: 100%
+  table-layout: fixed
+  white-space: nowrap
+  border: table-border
+  border-collapse: collapse
+  border-spacing: 0
+  box-shadow: 0 0 1em #888
+*/
+
+table.contents td
+  border: table-border
+  padding: 0.1em 0.25em
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  text-align: left
+  padding-left: 0.5em
+
+table.contents th
+  border: table-border
+  padding: 0.1em 0.25em
+  background-color: table-heading-background-color
+  text-align: left
+  padding-left: 0.5em
+  color: table-heading-foreground-color
+
+/* Alternate row highlights for clarity */
+table.contents tr:nth-child(even)
+  background: rgba(0,0,0,0.05)
+
+/* CONTENTS page */
+table.contents th.packageid
+  width: 10%
+
+table.contents th.description
+  width: 90%
+
+/* DETAIL page */
+table.contents th.photoid
+  width: 10%
+
+table.contents th.detail-poi
+  width: 1%
+
+table.contents th.notes
+  width: 89%
+
+/* Metadata table on detail page */
+/*
+table.metadata
+  width: 100%
+  table-layout: fixed
+  white-space: nowrap
+  border: table-border
+  border-collapse: collapse
+  border-spacing: 0
+  box-shadow: 0 0 1em #888
+*/
+
+table.metadata td
+  border: table-border
+  padding: 0.1em 0.25em
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+  text-align: left
+  padding-left: 0.5em
+
+table.metadata td.metakey
+  width: 10%
+  background: table-heading-background-color
+  color: table-heading-foreground-color
+  font-weight: bold
+
+table.metadata td.metaval
+  width: 90%
+
+/* Fading behavior */
+/*
+vendor(prop, args)
+  -webkit-{prop} args
+  -moz-{prop} args
+  {prop} args
+*/
+
+animation-name()
+  vendor('animation-name', arguments)
+
+animation-duration()
+  vendor('animation-duration', arguments)
+
+animation-timing-function()
+  vendor('animation-timing-function', arguments)
+
+animation-delay()
+  vendor('animation-delay', arguments)
+
+.instaFade
+  animation-name reset, fade-in
+  animation-duration 1.5s
+  animation-timing-function ease-in
+
+.quickFade
+  animation-name reset, fade-in
+  animation-duration 2.5s
+  animation-timing-function ease-in
+
+.delayOne
+  animation-delay 0, 0.5s
+
+.delayTwo
+  animation-delay 0, 1s
+
+.delayThree
+  animation-delay 0, 1.5s
+
+.delayFour
+  animation-delay 0, 2s
+
+.delayFive
+  animation-delay 0, 2.5s
+
+@-webkit-keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@-moz-keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@-o-keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@-webkit-keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
+
+@-moz-keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
+
+@-o-keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
+
+@keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1

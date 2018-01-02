@@ -21,7 +21,8 @@ cat <<CSS1
     <style type="text/css">
 CSS1
 
-$wipdir/mkgallerycss.sh | sed -e 's/^/        /'
+# CSS inline
+cat $wipdir/gallery.css | sed -e 's/^/        /'
 
 cat <<BODY1
     </style>

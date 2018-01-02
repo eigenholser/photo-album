@@ -104,3 +104,5 @@ ENV/
 # Project files
 *.jpg
 *.json
+
+node_modules/

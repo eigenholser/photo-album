@@ -34,12 +34,30 @@ is empty.
 The logo must also be present. The logo height is restricted in the template
 image tag to 92 pixels. Size it accordingly when you prepare the logo image.
 
+TODO: Currently the background image is not used. Stay tuned.
 
-Editing the Templates and CSS
------------------------------
+
+Editing the Templates
+---------------------
 
 The templates must be edited inside the shell scripts. Once the changes are
 complete, rebuild the templates as described in the first paragraph above.
+
+
+Stylesheets
+-----------
+
+Stylesheets are implemented using Stylus. Install Stylus locally not
+globally::
+
+    npm install stylus
+
+That is all. The CSS files will be built as needed during template creation
+and deleted when complete.
+
+Some rudimentary support for theme is contained in ``values.styl``. Change
+those values as needed.
+
 
 Footer
 ------

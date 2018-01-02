@@ -13,7 +13,7 @@ cat <<HEAD
 HEAD
 
 # CSS inline
-$wipdir/mkindexcss.sh | sed -e 's/^/      /'
+cat $wipdir/index.css | sed -e 's/^/      /'
 
 cat <<BODY1
     </style>
