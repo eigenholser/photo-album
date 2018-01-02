@@ -50,7 +50,7 @@ cat <<BODY1
       {% for photoid in photographs.keys() %}
       <div class="box">
         <div class="boxInner {% if photographs[photoid]["poi"] == 1 %}gallery-poi{% endif %}">
-          <a href="jpeg/{{ photographs[photoid]["filename"] }}"><img src="thumbs/{{ photographs[photoid]["filename"] }}" alt="{{ photographs[photoid]["description"] }}" title="{{ photographs[photoid]["description"] }}"/></a>
+          <a href="jpeg/{{ photographs[photoid]["filename"] }}"><img src="gallery-thumb/{{ photographs[photoid]["filename"] }}" alt="{{ photographs[photoid]["description"] }}" title="{{ photographs[photoid]["description"] }}"/></a>
           <div class="titleBox">{{ photoid }}</div>
         </div>
       </div>
