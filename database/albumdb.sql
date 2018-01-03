@@ -32,6 +32,7 @@ CREATE UNIQUE INDEX packages_pkgid ON packages(pkgid);
 CREATE TABLE photographs (
     pkgid           varchar(50),
     photoid         varchar(50),
+    crop            varchar(50),        /* Imagemagick convert -crop specs */
     poi             boolean,            /* photograph of interest */
     description     text,
     FOREIGN KEY(pkgid) REFERENCES packages(pkgid)

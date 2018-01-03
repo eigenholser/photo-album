@@ -1,8 +1,8 @@
 /* Clear out previous rows before inserting */
-DELETE FROM packages WHERE pkgid="PKGID";
+DELETE FROM packages WHERE pkgid="{{ pkgid }}";
 
 INSERT INTO packages VALUES (
-    /* pkgid */         'PKGID',
+    /* pkgid */         '{{ pkgid }}',
     /* pkg_date */      'PKGDATE',
     /* location */      'LOCATION',
     /* subjects */      'SUBJECTS',
@@ -20,13 +20,16 @@ INSERT INTO packages VALUES (
 );
 
 /* Clear out previous rows before inserting. */
-DELETE FROM photographs WHERE pkgid="PKGID";
+DELETE FROM photographs WHERE pkgid="{{ pkgid }}";
 
 /* Insert individual photo descriptions. */
+{% for photoid in photographs.keys() %}
 INSERT INTO photographs VALUES (
-    /* pkgid */         'PKGID',
-    /* photoid */       'PKGID-F00',
+    /* pkgid */         '{{ pkgid }}',
+    /* photoid */       '{{ photoid }}',
+    /* crop */          '{{ photographs[photoid]["crop"] }}',
     /* poi */           0,
     /* description */   ''
 );
+{% endfor %}
 

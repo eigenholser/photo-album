@@ -5,7 +5,7 @@ The SQLite database must be created in the database subdirectory of the
 ``build_directory`` specified in the ``album.cfg`` file. The ``sqlite3``
 utility must be installed::
 
-    sqlite3 albumdb.sqlite < album.sql
+    sqlite3 albumdb.sqlite < albumdb.sql
 
 Now you can roll up your sleeves and write beautiful SQL to specicfy the
 information needed to populate your HTML navigation files for all of the

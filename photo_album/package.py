@@ -38,6 +38,9 @@ class Package(AlbumBase):
     def keys(self):
         return sorted([photoid for photoid in self.contents.keys()])
 
+    def __setitem__(self, key, value):
+        self.contents[key] = value
+
     def __getitem__(self, key):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.
         return self.contents[key]

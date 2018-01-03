@@ -107,6 +107,7 @@ setup(
     entry_points={
         'console_scripts': [
             'mkcontents = photo_album.mkcontents:main',
+            'mkdbtemplate = photo_album.mkdbtemplate:main',
         ]
     },
     install_requires=install_requires_list,
