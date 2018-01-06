@@ -1,4 +1,3 @@
-#import argparse
 import configparser
 from jinja2 import (Environment, FileSystemLoader, PackageLoader,
         select_autoescape)
@@ -15,49 +14,55 @@ from photo_album import (Album, Package, CustomArgumentParser)
 logger = logging.getLogger(__name__)
 
 
-def mk_db_template(config):
-    packages = Album(config)
-    build_dir = config.get('album', 'build_directory')
-    album_dir = config.get('album', 'album_directory')
+def mk_db_template(config, pkgid, build=True):
+    """
+    Build a package database template. Update existing if it already exists.
+
+    Warning: The update mechanism is a one-shot update. It will do nothing if
+    the SQL is already current.
+    """
+    if build:
+        work_dir = config.get('album', 'build_directory')
+    else:
+        work_dir = config.get('album', 'album_directory')
+
     db_dir = config.get('album', 'database_directory')
-    template_dir = "{}/templates".format(build_dir)
+    template_dir = "{}/templates".format(work_dir)
 
-    for pkgid in packages.keys():
-        package = Package(config, pkgid, build=False)
+    package = Package(config, pkgid, build)
 
-        for photoid in package.keys():
-            photo = os.path.join(
-                    album_dir, pkgid, 'index/{}.tif'.format(photoid))
-            logger.debug("Identifying photograph {}".format(photo))
-            run = subprocess.run(['identify', photo], stdout=subprocess.PIPE)
-            match = re.search(r'\d+x\d+\+\d+\+\d+', run.stdout.decode("utf-8"))
-            if match:
-                crop = match.group()
-                logger.debug("Found crop marks: {}".format(crop))
-                package[photoid]['crop'] = crop
+    for photoid in package.keys():
+        photo = os.path.join(
+                work_dir, pkgid, 'gallery-tiff/{}.tif'.format(photoid))
+        logger.debug("Identifying photograph {}".format(photo))
+        run = subprocess.run(['identify', photo], stdout=subprocess.PIPE)
+        match = re.search(r'\d+x\d+\+\d+\+\d+', run.stdout.decode("utf-8"))
+        if match:
+            crop = match.group()
+            logger.debug("Found crop marks: {}".format(crop))
+            package[photoid]['crop'] = crop
 
-        env = Environment(
-            loader=PackageLoader("photo_album", package_path="templates"),
-            autoescape=select_autoescape(['sql'])
-        )
+    env = Environment(
+        loader=PackageLoader("photo_album", package_path="templates"),
+        autoescape=select_autoescape(['sql'])
+    )
 
-        template_vars = {
-            "pkgid": pkgid,
-            "photographs": package,
-            "package": packages[pkgid],
-        }
+    template_vars = {
+        "pkgid": pkgid,
+        "photographs": package,
+        "package": package,
+    }
 
-        sql_template = env.get_template('PKG-template.sql')
+    sql_template = env.get_template('PKG-template.sql')
 
-        dbfile = os.path.join(db_dir, 'PKG-{}.sql'.format(pkgid))
-        if os.path.isfile(dbfile):
-            logger.error(
-                    "PKG-{}.sql exists. Performing update.".format(pkgid))
-            update(pkgid, package, dbfile)
-        else:
-            logger.info("Writing package {}.sql".format(pkgid))
-            with open(dbfile, 'w') as f:
-                f.write(sql_template.render(template_vars))
+    dbfile = os.path.join(db_dir, 'PKG-{}.sql'.format(pkgid))
+    if os.path.isfile(dbfile):
+        logger.error("PKG-{}.sql exists. Performing update.".format(pkgid))
+        update(pkgid, package, dbfile)
+    else:
+        logger.info("Writing package {}.sql".format(pkgid))
+        with open(dbfile, 'w') as f:
+            f.write(sql_template.render(template_vars))
 
 
 def update(pkgid, package, dbfile):
@@ -76,19 +81,18 @@ def update(pkgid, package, dbfile):
             if m:
                 idx = content.index(line)
                 pattern = re.sub(r'\+', '\\+', photoid)
-                if (re.search(r'{}'.format(pattern), content[idx + 2])
-                        and not re.search(r'crop', content[idx + 3])):
+                if (re.search(r'{}'.format(pattern), content[idx + 2])):
                     pinserts[photoid] = [
                         content[idx + 0],
                         content[idx + 1],
                         content[idx + 2],
                         cropfmt.format(package[photoid]['crop']),
-                        content[idx + 3],
                         content[idx + 4],
                         content[idx + 5],
                         content[idx + 6],
+                        content[idx + 7],
                     ]
-                    for i in range(7):
+                    for i in range(8):
                         del content[idx]
                     break
 
@@ -107,8 +111,8 @@ def update(pkgid, package, dbfile):
             content.append("\n")
 
     logger.debug("Content line count: {}".format(len(content)))
-#   for line in content:
-#       print(line.rstrip())
+    for line in content:
+        logger.info(line.rstrip())
 
     with open(dbfile, 'w') as f:
         for line in content:
@@ -120,8 +124,10 @@ def main():
     Parse command-line arguments. Initiate file processing.
     """
     parser = CustomArgumentParser()
-    parser.add_argument("-c", "--config",
-            help="Configuration file.")
+    parser.add_argument("-c", "--config", help="Configuration file.")
+    parser.add_argument("-p", "--pkgid", help="Package ID.")
+    parser.add_argument("-a", "--album",
+            help="Work in album directory. Danger!", action="store_true")
     parser.add_argument("-v", "--verbose", help="Log level to DEBUG.",
             action="store_true")
     args = parser.parse_args()
@@ -134,17 +140,24 @@ def main():
     config_file = args.config
     error = False
     if not config_file:
-        log.error("Configuration file is required.")
+        logger.error("Configuration file is required.")
         error = True
     else:
         config = configparser.ConfigParser()
         config.read(config_file)
 
+    pkgid = args.pkgid
+    if not pkgid:
+        logger.error("Package ID is required.")
+        error = True
+
     if not error:
-        mk_db_template(config)
+        # XXX: Note logic negation of --album. Command-line semantics are more
+        # clearly expressed this way.
+        logger.warn("Working in album directory: {}".format(args.album))
+        mk_db_template(config, pkgid, not args.album)
 
     if error:
-        logger.warn("Not yet implemented.")
         parser.usage_message()
         sys.exit(1)
 

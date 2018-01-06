@@ -8,8 +8,13 @@ class Album(AlbumBase):
     """
     All packages in the album.
     """
-    def __init__(self, config):
-        self.get_packages_on_disk(config)
+    def __init__(self, config, build=True):
+        if build:
+            work_dir = config.get('album', 'build_directory')
+        else:
+            work_dir = config.get('album', 'album_directory')
+
+        self.get_packages_on_disk(work_dir)
         self.packages = {k: {} for k in self.package_list}
 
         super().__init__(config)
@@ -58,11 +63,9 @@ class Album(AlbumBase):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.
         return self.packages[key]
 
-    def get_packages_on_disk(self, config):
+    def get_packages_on_disk(self, work_dir):
         """
         Read packages present in album directory on disk.
         """
-        album_dir = config.get('album', 'album_directory')
-
-        self.package_list = sorted([file for file in os.listdir(album_dir)
-                if os.path.isdir(os.path.join(album_dir, file))])
+        self.package_list = sorted([file for file in os.listdir(work_dir)
+                if os.path.isdir(os.path.join(work_dir, file))])
