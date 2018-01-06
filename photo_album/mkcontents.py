@@ -45,7 +45,7 @@ def mk_package_contents(config):
     template_dir = "{}/templates".format(build_dir)
 
     for pkgid in packages.keys():
-        package = Package(config, pkgid)
+        package = Package(config, pkgid, build=False)
 
         env = Environment(
             loader=PackageLoader("photo_album", package_path="templates"),

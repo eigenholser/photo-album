@@ -7,10 +7,13 @@ class Package(AlbumBase):
     Contents of the package with metadata.
     """
 
-    def __init__(self, config, pkgid):
+    def __init__(self, config, pkgid, build=True):
         self.pkgid = pkgid
-        album_dir = config.get('album', 'album_directory')
-        self.photographs_on_disk(album_dir, pkgid)
+        if build:
+            work_dir = config.get('album', 'build_directory')
+        else:
+            work_dir = config.get('album', 'album_directory')
+        self.photographs_on_disk(work_dir, pkgid)
         self.contents = {
             os.path.splitext(k)[0]: {
                 "filename": k,
@@ -45,14 +48,14 @@ class Package(AlbumBase):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.
         return self.contents[key]
 
-    def photographs_on_disk(self, album_dir, pkgid):
+    def photographs_on_disk(self, work_dir, pkgid):
         """
         Read list of photographs from package on disk.
         """
         file_list = self.photographs_list = sorted(
             [file for file in os.listdir(
-                    os.path.join(album_dir, pkgid, 'jpeg'))
-                if not os.path.isdir(os.path.join(album_dir, pkgid, file))])
+                    os.path.join(work_dir, pkgid, 'jpeg'))
+                if not os.path.isdir(os.path.join(work_dir, pkgid, file))])
 
         self.photographs = [
             file for file in file_list if os.path.splitext(file)[1] == ".jpg"]

@@ -23,7 +23,7 @@ def mk_db_template(config):
     template_dir = "{}/templates".format(build_dir)
 
     for pkgid in packages.keys():
-        package = Package(config, pkgid)
+        package = Package(config, pkgid, build=False)
 
         for photoid in package.keys():
             photo = os.path.join(
