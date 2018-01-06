@@ -112,7 +112,7 @@ def update(pkgid, package, dbfile):
 
     logger.debug("Content line count: {}".format(len(content)))
     for line in content:
-        logger.info(line.rstrip())
+        logger.debug(line.rstrip())
 
     with open(dbfile, 'w') as f:
         for line in content:
