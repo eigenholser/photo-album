@@ -109,6 +109,7 @@ setup(
             'mkcontents = photo_album.mkcontents:main',
             'mkdbtemplate = photo_album.mkdbtemplate:main',
             'mkgallery = photo_album.mkgallery:main',
+            'mkcaption = photo_album.mkcaption:main',
         ]
     },
     install_requires=install_requires_list,
