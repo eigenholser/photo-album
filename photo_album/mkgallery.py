@@ -146,8 +146,9 @@ def main():
     else:
         logging.basicConfig(level=logging.INFO)
 
-    config_file = args.config
     error = False
+
+    config_file = args.config
     if not config_file:
         logger.error("Configuration file is required.")
         error = True
@@ -167,9 +168,10 @@ def main():
             mk_gallery_tiff_album(config, not args.album)
 
     if error:
-        logger.warn("Not yet implemented.")
+        logger.error("Exiting due to errors.")
         parser.usage_message()
         sys.exit(1)
+
 
 if __name__ == '__main__': # pragma no cover
     main()
