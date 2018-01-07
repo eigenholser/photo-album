@@ -31,12 +31,14 @@ def mk_gallery_tiff(config, pkgid, build=True):
     """
     Convert TIFF images to gallery size.
     """
-    build_dir = config.get('album', 'build_directory')
+    work_dir = get_work_dir(config, build)
 
     package = Package(config, pkgid, build)
-    pkg_dir = os.path.join(build_dir, pkgid)
-    source_dir = os.path.join(pkg_dir, "tiff")
-    gallery_dir = os.path.join(pkg_dir, "gallery-tiff")
+    pkg_dir = os.path.join(work_dir, pkgid)
+    tiff_source_dir = config.get('album', 'tiff_source_directory')
+    gallery_tiff_dir = config.get('album', 'gallery_tiff_directory')
+    source_dir = os.path.join(pkg_dir, tiff_source_directory)
+    gallery_dir = os.path.join(pkg_dir, gallery_tiff_directory)
 
     if not os.path.exists(pkg_dir):
         logger.error("Invalid package directory: {}".format(pkg_dir))
