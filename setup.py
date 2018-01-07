@@ -108,6 +108,7 @@ setup(
         'console_scripts': [
             'mkcontents = photo_album.mkcontents:main',
             'mkdbtemplate = photo_album.mkdbtemplate:main',
+            'mkgallery = photo_album.mkgallery:main',
         ]
     },
     install_requires=install_requires_list,
