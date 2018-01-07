@@ -14,6 +14,17 @@ from photo_album import (Album, Package, CustomArgumentParser)
 logger = logging.getLogger(__name__)
 
 
+def mk_db_template_album(config, build=True):
+    """
+    Make DB templates for all packages in scope.
+    """
+    work_dir = get_work_dir(config, build)
+    packages = Album(config, build)
+
+    for pkgid in packages.keys():
+        mk_db_template(config, pkgid, build)
+
+
 def mk_db_template(config, pkgid, build=True):
     """
     Build a package database template. Update existing if it already exists.
@@ -21,10 +32,7 @@ def mk_db_template(config, pkgid, build=True):
     Warning: The update mechanism is a one-shot update. It will do nothing if
     the SQL is already current.
     """
-    if build:
-        work_dir = config.get('album', 'build_directory')
-    else:
-        work_dir = config.get('album', 'album_directory')
+    work_dir = get_work_directory(config, build)
 
     db_dir = config.get('album', 'database_directory')
     template_dir = "{}/templates".format(work_dir)
@@ -119,15 +127,25 @@ def update(pkgid, package, dbfile):
             f.write(line)
 
 
+def get_work_dir(config, build):
+    """
+    Get the work directory.
+    """
+    if build:
+        return config.get('album', 'build_directory')
+    else:
+        return config.get('album', 'album_directory')
+
+
 def main():
     """
     Parse command-line arguments. Initiate file processing.
     """
     parser = CustomArgumentParser()
-    parser.add_argument("-c", "--config", help="Configuration file.")
-    parser.add_argument("-p", "--pkgid", help="Package ID.")
     parser.add_argument("-a", "--album",
             help="Work in album directory. Danger!", action="store_true")
+    parser.add_argument("-c", "--config", help="Configuration file.")
+    parser.add_argument("-p", "--pkgid", help="Package ID.")
     parser.add_argument("-v", "--verbose", help="Log level to DEBUG.",
             action="store_true")
     args = parser.parse_args()
@@ -147,15 +165,15 @@ def main():
         config.read(config_file)
 
     pkgid = args.pkgid
-    if not pkgid:
-        logger.error("Package ID is required.")
-        error = True
 
     if not error:
         # XXX: Note logic negation of --album. Command-line semantics are more
         # clearly expressed this way.
         logger.warn("Working in album directory: {}".format(args.album))
-        mk_db_template(config, pkgid, not args.album)
+        if pkgid:
+            mk_db_template(config, pkgid, not args.album)
+        else:
+            mk_db_template_album(config, not args.album)
 
     if error:
         parser.usage_message()

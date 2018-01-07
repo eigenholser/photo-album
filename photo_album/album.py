@@ -14,12 +14,12 @@ class Album(AlbumBase):
         else:
             work_dir = config.get('album', 'album_directory')
 
-        self.get_packages_on_disk(work_dir)
-        self.packages = {k: {} for k in self.package_list}
+        package_list = self.get_packages_on_disk(work_dir)
+        self.packages = {k: {} for k in package_list}
 
         super().__init__(config)
         self.album_description()
-        self.package_description()
+        self.package_description(package_list)
 
     def album_description(self):
         """
@@ -33,14 +33,16 @@ class Album(AlbumBase):
         self.title = row["albumid"]
         self.description = self.split_description(row["description"])
 
-    def package_description(self):
+    def package_description(self, package_list):
         """
+        Fetch package metadata for each package. Stash the data so it is
+        available as a dict on the object.
         """
         query = "SELECT * FROM packages WHERE pkgid IN ({})".format(
                 ','.join('?'*len(self.packages)))
         self.conn.row_factory = sqlite3.Row
         cur = self.conn.cursor()
-        cur.execute(query, self.package_list)
+        cur.execute(query, package_list)
         rows = cur.fetchall()
         row_list = [
             'pkgid', 'pkg_date', 'location', 'subjects', 'media_type',
@@ -67,5 +69,26 @@ class Album(AlbumBase):
         """
         Read packages present in album directory on disk.
         """
-        self.package_list = sorted([file for file in os.listdir(work_dir)
+        package_list = sorted([file for file in os.listdir(work_dir)
                 if os.path.isdir(os.path.join(work_dir, file))])
+
+        for pkgid in [x for x in package_list]:
+            if not self.is_package_dir(work_dir, pkgid):
+                package_list.remove(pkgid)
+
+        return package_list
+
+    def is_package_dir(self, work_dir, pkgid):
+        """
+        Inspect package directory to see if it looks like a package directory.
+        That means it will have a `jpeg' and a `tiff' directory inside.
+
+        TODO: Is there a better way?
+        """
+        ls_pkg_dir = os.listdir(os.path.join(work_dir, pkgid))
+        # TODO: Maybe these could be in the configuration file?
+        if 'tiff' in ls_pkg_dir and 'jpeg' in ls_pkg_dir:
+            return True
+        return False
+
+
