@@ -43,7 +43,8 @@ def mk_db_template(config, pkgid, build=True):
         photo = os.path.join(
                 work_dir, pkgid, 'gallery-tiff/{}.tif'.format(photoid))
         logger.debug("Identifying photograph {}".format(photo))
-        run = subprocess.run(['identify', photo], stdout=subprocess.PIPE)
+        run = subprocess.run(
+                ['identify', photo], stdout=subprocess.PIPE, check=True)
         match = re.search(r'\d+x\d+\+\d+\+\d+', run.stdout.decode("utf-8"))
         if match:
             crop = match.group()
