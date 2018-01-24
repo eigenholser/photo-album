@@ -53,7 +53,20 @@ cat <<BODY3
     </main>
 
     <footer>
-        <p style="text-align: center;">Crafted with Love by eigenholser</p>
+      <div class="footer-container">
+        <div class="footer-child">
+          <ul>
+            <li><a class="footer" href="{% if pkgid %}../{% endif %}faq.html">Frequently Asked Questions</a></li>
+          </ul>
+        </div>
+        <div class="footer-child">
+        </div>
+        <div class="footer-child">
+        </div>
+      </div>
+      <div class="footer-credit">
+      <p class="footer-credit">Crafted with Care by eigenholser.</p>
+      </div>
     </footer>
 
     </div> {# <!-- /#container --> #}

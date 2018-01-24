@@ -4,7 +4,7 @@
 
 wipdir=${0%%mkdetailtemplate.sh}
 
-cat <<BODY1
+cat <<BODY
 {% extends "base.html" %}
 {% block title %}
             <h1>{{ pkgid }}</h1>
@@ -104,4 +104,4 @@ cat <<BODY1
     </table>
     <p>&nbsp;<p>
 {% endblock content %}
-BODY2
+BODY
