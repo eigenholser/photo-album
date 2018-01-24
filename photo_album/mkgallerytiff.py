@@ -37,8 +37,8 @@ def mk_gallery_tiff(config, pkgid, build=True):
     pkg_dir = os.path.join(work_dir, pkgid)
     tiff_source_dir = config.get('album', 'tiff_source_directory')
     gallery_tiff_dir = config.get('album', 'gallery_tiff_directory')
-    source_dir = os.path.join(pkg_dir, tiff_source_directory)
-    gallery_dir = os.path.join(pkg_dir, gallery_tiff_directory)
+    source_dir = os.path.join(pkg_dir, tiff_source_dir)
+    gallery_dir = os.path.join(pkg_dir, gallery_tiff_dir)
 
     if not os.path.exists(pkg_dir):
         logger.error("Invalid package directory: {}".format(pkg_dir))
@@ -53,13 +53,15 @@ def mk_gallery_tiff(config, pkgid, build=True):
         scale_factor = compute_scale_factor(config, im.size)
         logger.debug("({}x{}) [{}] {}".format(
             im.size[0], im.size[1], scale_factor, photoid))
-        resize_cmd = "convert -resize {scale}% {source} {target}".format(
-                scale=scale_factor, source=source_photo, target=target_photo)
+        resize_cmd = ['convert', '-resize',
+                '{scale}%'.format(scale=scale_factor),
+                '{source}'.format(source=source_photo),
+                '{target}'.format(target=target_photo)]
         logger.info(
             "Creating gallery TIFF {}.tif with scaling {:3.2f}%".format(
             photoid, scale_factor))
         run = subprocess.run(
-                resize_cmd.split(), stdout=subprocess.PIPE, check=True)
+                resize_cmd, stdout=subprocess.PIPE, check=True)
 
         # TODO: Refactor this to be functional'ish.
         crop = get_crop(package, photoid)
@@ -78,11 +80,11 @@ def mk_gallery_tiff(config, pkgid, build=True):
                     int((crop[2] * scale_factor)/100),
                     int((crop[3] * scale_factor)/100),)
                 logger.warn("New crop marks: {}x{}+{}+{}".format(*new_crop))
-                crop_cmd = \
-                    "convert -crop {}x{}+{}+{} {source} {target}".format(
-                    *new_crop, source=target_photo, target=target_photo)
+                crop_cmd = ['convert', '-crop {}x{}+{}+{}'.format(*new_crop),
+                        '{source}'.format(source=target_photo),
+                        '{target}'.format(target=target_photo)]
                 logger.warn(crop_cmd)
-                run = subprocess.run(crop_cmd.split(), stdout=subprocess.PIPE)
+                run = subprocess.run(crop_cmd, stdout=subprocess.PIPE)
                 # TODO: Check exec status
 
 

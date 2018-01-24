@@ -52,7 +52,7 @@ def mk_gallery_jpeg(config, pkgid, build=True):
 
     for photoid in package.keys():
         source_photo = os.path.join(
-                gallery_tiff_path, '{}.tif'.format(photoid))
+                gallery_tiff_path, '{}.jpg'.format(photoid))
         gallery_jpeg_photo = os.path.join(
                 gallery_jpeg_path, '{}.jpg'.format(photoid))
         gallery_thumb_photo = os.path.join(
@@ -62,16 +62,16 @@ def mk_gallery_jpeg(config, pkgid, build=True):
                 config.get('album', 'gallery_thumb_height'))
         thumb_scale_factor = compute_scale_factor(
                 gallery_thumb_height, im.size)
-        jpeg_cmd = "convert {source} {target}".format(
-                source=source_photo, target=gallery_jpeg_photo)
-        thumb_cmd = "convert -resize {scale}% {source} {target}".format(
-                scale=thumb_scale_factor, source=source_photo,
-                target=gallery_thumb_photo)
+        jpeg_cmd = ['convert', '{source}'.format(source=source_photo),
+                '{target}'.format(target=gallery_jpeg_photo)]
+        thumb_cmd = ['convert', '-resize',
+                '{scale}%'.format(scale=thumb_scale_factor),
+                '{source}'.format(source=source_photo),
+                '{target}'.format(target=gallery_thumb_photo)]
         logger.debug("{}".format(jpeg_cmd))
         logger.info("Creating gallery JPEG {}.jpg".format(photoid))
         # XXX: Intentionally not handling exception if subprocess fails.
-        run = subprocess.run(
-                jpeg_cmd.split(), stdout=subprocess.PIPE, check=True)
+        run = subprocess.run(jpeg_cmd, stdout=subprocess.PIPE, check=True)
 
         logger.debug("{}".format(thumb_cmd))
         logger.info(
@@ -79,7 +79,7 @@ def mk_gallery_jpeg(config, pkgid, build=True):
             photoid, thumb_scale_factor))
         # XXX: Intentionally not handling exception if subprocess fails.
         run = subprocess.run(
-                thumb_cmd.split(), stdout=subprocess.PIPE, check=True)
+                thumb_cmd, stdout=subprocess.PIPE, check=True)
 
 
 def compute_scale_factor(height, size):
