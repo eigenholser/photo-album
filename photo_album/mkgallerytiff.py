@@ -84,8 +84,10 @@ def mk_gallery_tiff(config, pkgid, build=True):
                         '{source}'.format(source=target_photo),
                         '{target}'.format(target=target_photo)]
                 logger.warn(crop_cmd)
-                run = subprocess.run(crop_cmd, stdout=subprocess.PIPE)
-                # TODO: Check exec status
+                # XXX: Intentionally not handling exception if subprocess
+                #      fails.
+                run = subprocess.run(
+                        crop_cmd, stdout=subprocess.PIPE, check=True)
 
 
 def compute_scale_factor(config, size):
