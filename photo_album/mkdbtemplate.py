@@ -33,9 +33,7 @@ def mk_db_template(config, pkgid, build=True):
     the SQL is already current.
     """
     work_dir = get_work_directory(config, build)
-
     db_dir = config.get('album', 'database_directory')
-    template_dir = "{}/templates".format(work_dir)
 
     package = Package(config, pkgid, build)
 
