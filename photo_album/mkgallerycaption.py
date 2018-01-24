@@ -3,6 +3,7 @@ import argparse
 import configparser
 import logging
 import os
+import pathlib
 from PIL import (Image, ImageDraw, ImageFont, ImageEnhance)
 import sys
 from photo_album import (Album, Package, Caption, CustomArgumentParser)
@@ -39,6 +40,8 @@ def mk_caption(config, pkgid, build=True):
     if not os.path.exists(pkg_dir):
         logger.error("Invalid package directory: {}".format(pkg_dir))
         sys.exit(1)
+
+    pathlib.Path(target_dir).mkdir(parents=True, exist_ok=True)
 
     for photoid in package.keys():
         source = os.path.join(source_dir, '{}.tif'.format(photoid))
