@@ -88,3 +88,7 @@ See the `README in the templates directory`_ for details.
 .. _How to align an image side by side with a heading element?: https://stackoverflow.com/a/29504662
 .. _How to make this Header/Content/Footer layout using CSS?: https://codepen.io/enjikaka/pen/zxdYjX
 .. _Anser to question #7123138 on Stack Overflow: https://codepen.io/enjikaka/pen/zxdYjX
+.. _Creating Responsive Tiled Layout with Pure CSS: http://www.dwuser.com/education/content/creating-responsive-tiled-layout-with-pure-css/
+.. _Thumbnail Gallery Example: http://output.jsbin.com/aseram/1
+.. _Thumbnail Gallery JSbin: http://jsbin.com/dewuhewari/edit?html,output
+
