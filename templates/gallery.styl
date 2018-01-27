@@ -13,17 +13,17 @@
 
 .boxInner
     position: absolute
-    left: 10px
-    right: 10px
-    top: 10px
-    bottom: 10px
+    left: margin-content
+    right: margin-content
+    top: margin-content
+    bottom: margin-content
     overflow: hidden
 
 .boxInner img
     height: 100%
 
 .gallery-poi
-    box-shadow: 0 0 1em link-color-hover //#f23b1c
+    box-shadow: 0 0 1em link-color-hover
 
 transition()
   vendor('transition', arguments)
@@ -34,10 +34,9 @@ transition()
     left: 0
     right: 0
     margin-bottom: -50px
-    background: #000
     background: rgba(0, 0, 0, 0.39)
     color: #FFF
-    padding: 10px
+    padding: margin-content
     text-align: center
     transition(all 0.3s ease-out)
 

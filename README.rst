@@ -91,4 +91,5 @@ See the `README in the templates directory`_ for details.
 .. _Creating Responsive Tiled Layout with Pure CSS: http://www.dwuser.com/education/content/creating-responsive-tiled-layout-with-pure-css/
 .. _Thumbnail Gallery Example: http://output.jsbin.com/aseram/1
 .. _Thumbnail Gallery JSbin: http://jsbin.com/dewuhewari/edit?html,output
-
+.. _CSS to make HTML page footer stay at bottom of the page with a minimum height: http://jsfiddle.net/3L3h64qo/2/
+.. _JSFiddle for previous Stackoverflow: http://jsfiddle.net/3L3h64qo/2/

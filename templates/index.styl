@@ -1,23 +1,23 @@
 @import "values.styl"
 @import "functions.styl"
 
-html,
-body
+html
+  position: relative
+  min-height: 100%
+
+html, body
   margin: 0
   padding: 0
-  height: 100%
+
+body
   font-family: sans-serif
   font-size: 16px
 
-#container
-  height: 100vh
-  display: flex
-  flex-direction: column
+article
+  margin-bottom: footer-height
 
-main
-  flex: 1
-  padding-left: 10px
-  padding-right: 10px
+article p
+  margin-left: margin-content
 
 header
   color: header-color
@@ -29,7 +29,7 @@ header img
   position: relative
   vertical-align: middle
   float: right
-  padding-right: 10px
+  padding-right: margin-content
 
 header h1
   margin-left: 0.5em
@@ -43,8 +43,12 @@ header h1
 footer
   color: footer-color
   border-top: 2px solid #000
-  height: footer-height
   background: footer-background
+  height: footer-height
+  position: absolute
+  bottom: 0
+  left: 0
+  right: 0
 
 div.footer-container
   margin: 0
@@ -122,17 +126,6 @@ table
   border-spacing: 0
   box-shadow: box-shadow
 
-/*
-table.contents
-  width: 100%
-  table-layout: fixed
-  white-space: nowrap
-  border: table-border
-  border-collapse: collapse
-  border-spacing: 0
-  box-shadow: 0 0 1em #888
-*/
-
 table.contents td
   border: table-border
   padding: 0.1em 0.25em
@@ -172,17 +165,6 @@ table.contents th.notes
   width: 89%
 
 /* Metadata table on detail page */
-/*
-table.metadata
-  width: 100%
-  table-layout: fixed
-  white-space: nowrap
-  border: table-border
-  border-collapse: collapse
-  border-spacing: 0
-  box-shadow: 0 0 1em #888
-*/
-
 table.metadata td
   border: table-border
   padding: 0.1em 0.25em
@@ -202,13 +184,6 @@ table.metadata td.metaval
   width: 90%
 
 /* Fading behavior */
-/*
-vendor(prop, args)
-  -webkit-{prop} args
-  -moz-{prop} args
-  {prop} args
-*/
-
 animation-name()
   vendor('animation-name', arguments)
 
