@@ -27,8 +27,8 @@ cat <<BODY
     <h3>Can I enhance or edit the photographs?</h3>
 
     <p>Yes but with some <i>caveats</i>.
-    Never ever edit the original scanned images cross my heart and hope to die!.
-    Those are the master copies. Make a copy first and edit the that.</p>
+    Never ever edit the original scanned images cross my heart, hope to die!.
+    Those are the master copies. Make a copy first and edit that.</p>
 
     <p>
     Also <i>important</i>.
