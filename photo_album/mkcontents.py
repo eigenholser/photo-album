@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 
 def mk_archive_contents(config):
-    album = Album(config)
+    album = Album(config, False)
     build_dir = config.get('album', 'build_directory')
     album_dir = config.get('album', 'album_directory')
     template_dir = "{}/templates".format(build_dir)
@@ -39,7 +39,7 @@ def mk_archive_contents(config):
 
 
 def mk_package_contents(config):
-    packages = Album(config)
+    packages = Album(config, False)
     build_dir = config.get('album', 'build_directory')
     album_dir = config.get('album', 'album_directory')
     template_dir = "{}/templates".format(build_dir)
