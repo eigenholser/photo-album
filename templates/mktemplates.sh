@@ -7,8 +7,7 @@ echo "Creating templates..."
 
 echo "index.css"
 # CSS inline
-#$wipdir/node_modules/.bin/stylus --compress < index.styl > index.css
-$wipdir/node_modules/.bin/stylus < index.styl > index.css
+$wipdir/node_modules/.bin/stylus --compress < index.styl > index.css
 
 echo "gallery.css"
 # CSS inline
