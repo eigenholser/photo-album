@@ -1,0 +1,72 @@
+animation-name()
+  vendor('animation-name', arguments)
+
+animation-duration()
+  vendor('animation-duration', arguments)
+
+animation-timing-function()
+  vendor('animation-timing-function', arguments)
+
+animation-delay()
+  vendor('animation-delay', arguments)
+
+.insta-fade
+  animation-name reset, fade-in
+  animation-duration 1.5s
+  animation-timing-function ease-in
+
+@-webkit-keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@-moz-keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@-o-keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@keyframes reset
+  0%
+    opacity: 0
+  100%
+    opacity: 0
+
+@-webkit-keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
+
+@-moz-keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
+
+@-o-keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
+
+@keyframes fade-in
+  0%
+    opacity: 0
+  40%
+    opacity: 0
+  100%
+    opacity: 1
