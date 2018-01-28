@@ -19,7 +19,6 @@ def mk_archive_contents(config):
     build_dir = config.get('album', 'build_directory')
     album_dir = config.get('album', 'album_directory')
     template_dir = "{}/templates".format(build_dir)
-    #contents_title = config.get('album', 'title')
     env = Environment(
         loader=PackageLoader("photo_album", package_path="templates"),
         autoescape=select_autoescape(['html'])
@@ -31,11 +30,16 @@ def mk_archive_contents(config):
         "packages": album
     }
 
-    template = env.get_template('contents.html')
+    contents_template = env.get_template('contents.html')
+    faq_template = env.get_template('faq.html')
 
-    logger.info("Writing /contents.html")
+    logger.info("Writing {}/contents.html".format(album_dir))
     with open(os.path.join(album_dir, 'contents.html'), 'w') as f:
-        f.write(template.render(template_vars))
+        f.write(contents_template.render(template_vars))
+
+    logger.info("Writing {}/faq.html".format(album_dir))
+    with open(os.path.join(album_dir, 'faq.html'), 'w') as f:
+        f.write(faq_template.render(template_vars))
 
 
 def mk_package_contents(config):
