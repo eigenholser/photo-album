@@ -65,7 +65,7 @@ cat <<BODY3
         </div>
       </div>
       <div class="footer-credit">
-      <p class="footer-credit">Crafted with Care by eigenholser.</p>
+      <p class="footer-credit">&#x2692 Crafted with Care by <a class="footer" href="https://github.com/eigenholser">eigenholser</a> &#x2692</p>
       </div>
     </footer>
 

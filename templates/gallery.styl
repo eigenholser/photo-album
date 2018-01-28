@@ -11,7 +11,7 @@
     width: 25%
     padding-bottom: 25%
 
-.boxInner
+.box-inner
     position: absolute
     left: margin-content
     right: margin-content
@@ -19,7 +19,7 @@
     bottom: margin-content
     overflow: hidden
 
-.boxInner img
+.box-inner img
     height: 100%
 
 .gallery-poi
@@ -28,7 +28,7 @@
 transition()
   vendor('transition', arguments)
 
-.boxInner .titleBox
+.box-inner .box-title
     position: absolute
     bottom: 0
     left: 0
@@ -40,9 +40,9 @@ transition()
     text-align: center
     transition(all 0.3s ease-out)
 
-body.no-touch .boxInner:hover .titleBox,
+body.no-touch .box-inner:hover .box-title,
 
-body.touch .boxInner.touchFocus .titleBox
+body.touch .box-inner.touchFocus .box-title
     margin-bottom: 0
 
 @media only screen and (max-width : 480px)

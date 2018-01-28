@@ -49,9 +49,9 @@ cat <<BODY1
       <!-- Define all of the tiles: -->
       {% for photoid in photographs.keys() %}
       <div class="box">
-        <div class="boxInner {% if photographs[photoid]["poi"] == 1 %}gallery-poi{% endif %}">
+        <div class="box-inner {% if photographs[photoid]["poi"] == 1 %}gallery-poi{% endif %}">
           <a href="jpeg/{{ photographs[photoid]["filename"] }}"><img src="gallery-thumb/{{ photographs[photoid]["filename"] }}" alt="{{ photographs[photoid]["description"] }}" title="{{ photographs[photoid]["description"] }}"/></a>
-          <div class="titleBox">{{ photoid }}</div>
+          <div class="box-title">{{ photoid }}</div>
         </div>
       </div>
       {% endfor %}
