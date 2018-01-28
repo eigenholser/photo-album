@@ -17,11 +17,15 @@ article
   margin-bottom: footer-height
 
 article p
-  margin-left: margin-content
+  margin: 15px
+
+article h1
+article h2
+  margin: 10px
 
 header
   color: header-color
-  border-bottom: 2px solid #000
+  border-bottom: 1px solid #000
   height: header-height
   background: header-background
 
@@ -42,7 +46,7 @@ header h1
 
 footer
   color: footer-color
-  border-top: 2px solid #000
+  border-top: 1px solid #000
   background: footer-background
   height: footer-height
   position: absolute
@@ -118,17 +122,17 @@ a:active
 
 /* Contents tables on main contents page and detail page. */
 table
-  width: 100%
+  width: 99%
+  margin: 0.5%
   table-layout: fixed
   white-space: nowrap
   border: table-border
   border-collapse: collapse
   border-spacing: 0
   box-shadow: box-shadow
+  padding: 0.1em 0.25em
 
 table.contents td
-  border: table-border
-  padding: 0.1em 0.25em
   white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
@@ -136,8 +140,6 @@ table.contents td
   padding-left: 0.5em
 
 table.contents th
-  border: table-border
-  padding: 0.1em 0.25em
   background-color: table-heading-background-color
   text-align: left
   padding-left: 0.5em
@@ -166,9 +168,6 @@ table.contents th.notes
 
 /* Metadata table on detail page */
 table.metadata td
-  border: table-border
-  padding: 0.1em 0.25em
-  white-space: nowrap
   overflow: hidden
   text-overflow: ellipsis
   text-align: left
@@ -183,7 +182,10 @@ table.metadata td.metakey
 table.metadata td.metaval
   width: 90%
 
-/* Fading behavior */
+/*
+ * Fading behavior
+ */
+
 animation-name()
   vendor('animation-name', arguments)
 
@@ -196,30 +198,10 @@ animation-timing-function()
 animation-delay()
   vendor('animation-delay', arguments)
 
-.instaFade
+.insta-fade
   animation-name reset, fade-in
   animation-duration 1.5s
   animation-timing-function ease-in
-
-.quickFade
-  animation-name reset, fade-in
-  animation-duration 2.5s
-  animation-timing-function ease-in
-
-.delayOne
-  animation-delay 0, 0.5s
-
-.delayTwo
-  animation-delay 0, 1s
-
-.delayThree
-  animation-delay 0, 1.5s
-
-.delayFour
-  animation-delay 0, 2s
-
-.delayFive
-  animation-delay 0, 2.5s
 
 @-webkit-keyframes reset
   0%

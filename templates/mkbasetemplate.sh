@@ -46,7 +46,7 @@ echo "\" />"
 cat <<BODY3
     </header>
 
-    <article class="instaFade">
+    <article class="insta-fade">
 
       {% block content %}{% endblock %}
 
