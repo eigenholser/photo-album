@@ -1,3 +1,4 @@
+import collections
 import configparser
 from jinja2 import (Environment, FileSystemLoader, PackageLoader,
         select_autoescape)
@@ -34,12 +35,20 @@ def mk_db_template(config, pkgid, build=True):
     """
     work_dir = get_work_dir(config, build)
     db_dir = config.get('album', 'database_directory')
+    tiff_src_dir = config.get('album', 'tiff_source_directory')
+    gallery_tiff_dir = config.get('album', 'gallery_tiff_directory')
 
     package = Package(config, pkgid, build)
+    mapfile = os.path.join(work_dir, pkgid, tiff_src_dir, 'rename_map.txt')
+    map = read_alt_file_map(mapfile)
 
-    for photoid in package.keys():
+    newpkg = collections.OrderedDict()
+    for photoid in sorted(package.keys()):
+        newpkg[map.get(photoid, photoid)] = {}
+
+    for photoid in sorted(newpkg.keys()):
         photo = os.path.join(
-                work_dir, pkgid, 'gallery-tiff/{}.tif'.format(photoid))
+                work_dir, pkgid, gallery_tiff_dir, '{}.tif'.format(photoid))
         logger.debug("Identifying photograph {}".format(photo))
         if os.path.isfile(photo):
             run = subprocess.run(
@@ -49,7 +58,7 @@ def mk_db_template(config, pkgid, build=True):
             if match:
                 crop = match.group()
                 logger.debug("Found crop marks: {}".format(crop))
-                package[photoid]['crop'] = crop
+                newpkg[photoid]['crop'] = crop
 
     env = Environment(
         loader=PackageLoader("photo_album", package_path="templates"),
@@ -58,8 +67,8 @@ def mk_db_template(config, pkgid, build=True):
 
     template_vars = {
         "pkgid": pkgid,
-        "photographs": package,
-        "package": package,
+        "photographs": newpkg,
+        "package": newpkg,
     }
 
     sql_template = env.get_template('PKG-template.sql')
@@ -67,7 +76,7 @@ def mk_db_template(config, pkgid, build=True):
     dbfile = os.path.join(db_dir, 'PKG-{}.sql'.format(pkgid))
     if os.path.isfile(dbfile):
         logger.error("PKG-{}.sql exists. Performing update.".format(pkgid))
-        update(pkgid, package, dbfile)
+        update(pkgid, newpkg, dbfile)
     else:
         logger.info("Writing package {}.sql".format(pkgid))
         with open(dbfile, 'w') as f:
@@ -91,11 +100,12 @@ def update(pkgid, package, dbfile):
                 idx = content.index(line)
                 pattern = re.sub(r'\+', '\\+', photoid)
                 if (re.search(r'{}'.format(pattern), content[idx + 2])):
+                    cropval = package[photoid].get('crop', '')
                     pinserts[photoid] = [
                         content[idx + 0],
                         content[idx + 1],
                         content[idx + 2],
-                        cropfmt.format(package[photoid]['crop']),
+                        cropfmt.format(cropval),
                         content[idx + 4],
                         content[idx + 5],
                         content[idx + 6],
@@ -110,10 +120,11 @@ def update(pkgid, package, dbfile):
             for line in pinserts[photoid]:
                 content.append(line)
         elif pinserts.keys():
+            cropval = package[photoid].get('crop', '')
             content.append("INSERT INTO photographs VALUES (\n")
             content.append("    /* pkgid */         '{}',\n".format(pkgid))
             content.append("    /* photoid */       '{}',\n".format(photoid))
-            content.append("    /* crop */          '{}',\n".format(package[photoid]['crop']))
+            content.append("    /* crop */          '{}',\n".format(cropval))
             content.append("    /* poi */           '0',\n")
             content.append("    /* description */   ''\n")
             content.append(");\n")
@@ -136,6 +147,77 @@ def get_work_dir(config, build):
         return config.get('album', 'build_directory')
     else:
         return config.get('album', 'album_directory')
+
+
+# This was copied/pasted from photo_rename because I want intstant
+# gratification.
+def read_alt_file_map(mapfile, lineterm=None, delimiter='\t'):
+    """
+    Read a filename map for the purpose of transforming the filenames as
+    an alternative to using EXIF/XMP metadata DateTime information. Only
+    require map file as an absolute path.
+    """
+    with open(mapfile, 'r') as f:
+        lines = [
+            line for line in f.readlines() if not line.startswith('#')]
+
+    if lineterm is None:
+        lineterm = get_line_term(lines)
+
+    # Get a list of destination filenames from map so we can check for
+    # dupes. This may seem pedantic but it will avoid a lot of trouble if
+    # there is a duplicate new filename because of human error.
+    files = [
+        str.split(line.rstrip(lineterm), delimiter)[1] for line in lines]
+    dupe_file = scan_for_dupe_files(files)
+    if dupe_file:
+        raise Exception(
+            "Duplicate destination filename detected: {}".format(dupe_file))
+
+    # XXX: This is soooo cool! List of lists flattened all on one nested
+    # comprehension.
+    # [[k1, v1], [k2, v2], ..., [kn, vn]]
+    #                               --> {k1: v1, k2: v2, ..., kn: vn}
+    return dict(zip(*[iter([x for sublist in [
+        str.split(line.rstrip(lineterm), delimiter) for line in lines]
+        for x in sublist])] * 2))
+
+
+# This was copied/pasted from photo_rename because I want intstant
+# gratification.
+def get_line_term(lines):
+    """
+    Find line termination style. Require every line to have the same
+    termination.
+    """
+    lineterm = None
+    for line in lines:
+        if line.endswith('\r\n'):
+            term = '\r\n'
+        elif line.endswith('\n'):
+            term = '\n'
+        if lineterm is not None and lineterm != term:
+            raise Exception("Inconsistent line termination.")
+        else:
+            lineterm = term
+    return lineterm
+
+
+# This was copied/pasted from photo_rename because I want intstant
+# gratification.
+def scan_for_dupe_files(files):
+    """
+    O(n^2) scan of desination list for duplicates. Used when processing a
+    map file. Returns True if duplicate files.
+    """
+    for ofile in files:
+        count = 0
+        for ifile in files:
+            if ofile == ifile:
+                count += 1
+            if count > 1:
+                return ifile
+    return False
 
 
 def main():
@@ -179,6 +261,7 @@ def main():
     if error:
         parser.usage_message()
         sys.exit(1)
+
 
 if __name__ == '__main__': # pragma no cover
     main()
