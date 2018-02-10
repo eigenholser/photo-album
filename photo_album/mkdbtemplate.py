@@ -32,7 +32,7 @@ def mk_db_template(config, pkgid, build=True):
     Warning: The update mechanism is a one-shot update. It will do nothing if
     the SQL is already current.
     """
-    work_dir = get_work_directory(config, build)
+    work_dir = get_work_dir(config, build)
     db_dir = config.get('album', 'database_directory')
 
     package = Package(config, pkgid, build)
@@ -41,13 +41,15 @@ def mk_db_template(config, pkgid, build=True):
         photo = os.path.join(
                 work_dir, pkgid, 'gallery-tiff/{}.tif'.format(photoid))
         logger.debug("Identifying photograph {}".format(photo))
-        run = subprocess.run(
+        if os.path.isfile(photo):
+            run = subprocess.run(
                 ['identify', photo], stdout=subprocess.PIPE, check=True)
-        match = re.search(r'\d+x\d+\+\d+\+\d+', run.stdout.decode("utf-8"))
-        if match:
-            crop = match.group()
-            logger.debug("Found crop marks: {}".format(crop))
-            package[photoid]['crop'] = crop
+            match = re.search(
+                r'\d+x\d+\+\d+\+\d+', run.stdout.decode("utf-8"))
+            if match:
+                crop = match.group()
+                logger.debug("Found crop marks: {}".format(crop))
+                package[photoid]['crop'] = crop
 
     env = Environment(
         loader=PackageLoader("photo_album", package_path="templates"),
