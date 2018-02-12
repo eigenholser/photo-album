@@ -29,7 +29,7 @@ def mk_gallery_jpeg_album(config, build=True):
 
 def mk_gallery_jpeg(config, pkgid, build=True):
     """
-    Convert TIFF images to gallery size.
+    Convert cropped TIFF images to JPEG with gallery size.
     """
     work_dir = get_work_dir(config, build)
 
@@ -52,7 +52,7 @@ def mk_gallery_jpeg(config, pkgid, build=True):
 
     for photoid in package.keys():
         source_photo = os.path.join(
-                gallery_tiff_path, '{}.jpg'.format(photoid))
+                gallery_tiff_path, '{}.tif'.format(photoid))
         gallery_jpeg_photo = os.path.join(
                 gallery_jpeg_path, '{}.jpg'.format(photoid))
         gallery_thumb_photo = os.path.join(
