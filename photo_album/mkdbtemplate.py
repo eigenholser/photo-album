@@ -75,7 +75,7 @@ def mk_db_template(config, pkgid, build=True):
 
     dbfile = os.path.join(db_dir, 'PKG-{}.sql'.format(pkgid))
     if os.path.isfile(dbfile):
-        logger.error("PKG-{}.sql exists. Performing update.".format(pkgid))
+        logger.warn("PKG-{}.sql exists. Performing update.".format(pkgid))
         update(pkgid, newpkg, dbfile)
     else:
         logger.info("Writing package {}.sql".format(pkgid))
