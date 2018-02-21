@@ -95,7 +95,7 @@ def update(pkgid, package, dbfile):
     cropfmt = """    /* crop */          '{}',\n"""
     for photoid in package.keys():
         for line in [x for x in content]:
-            m = re.match(r'INSERT INTO photograph', line)
+            m = re.match(r'INSERT INTO photographs VALUES', line)
             if m:
                 idx = content.index(line)
                 pattern = re.sub(r'\+', '\\+', photoid)
