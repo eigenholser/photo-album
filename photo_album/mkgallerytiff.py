@@ -61,11 +61,15 @@ def mk_gallery_tiff(config, pkgid, build=True):
                 '{scale}%'.format(scale=scale_factor),
                 '{source}'.format(source=source_photo),
                 '{target}'.format(target=target_photo)]
-        logger.info(
-            "Creating gallery TIFF {}.tif with scaling {:3.2f}%".format(
-            photoid, scale_factor))
-        run = subprocess.run(
-                resize_cmd, stdout=subprocess.PIPE, check=True)
+        if os.path.exists(target_photo):
+            logger.info("Target photograph exists. Skipping: {}".format(
+                target_photo))
+        else:
+            logger.info(
+                "Creating gallery TIFF {}.tif with scaling {:3.2f}%".format(
+                photoid, scale_factor))
+            run = subprocess.run(
+                    resize_cmd, stdout=subprocess.PIPE, check=True)
 
         # TODO: Refactor this to be functional'ish.
         crop = get_crop(package, photoid)
