@@ -49,6 +49,10 @@ def mk_gallery_tiff(config, pkgid, build=True):
     for photoid in package.keys():
         source_photo = os.path.join(source_dir, '{}.tif'.format(photoid))
         target_photo = os.path.join(gallery_dir, '{}.tif'.format(photoid))
+
+        # Necessary for large format photographs.
+        Image.MAX_IMAGE_PIXELS = int(1024 * 1024 * 1024)
+
         im = Image.open(source_photo)
         scale_factor = compute_scale_factor(config, im.size)
         logger.debug("({}x{}) [{}] {}".format(
