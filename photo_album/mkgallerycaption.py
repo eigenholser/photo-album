@@ -6,7 +6,7 @@ import os
 import pathlib
 from PIL import (Image, ImageDraw, ImageFont, ImageEnhance)
 import sys
-from photo_album import (Album, Package, Caption, CustomArgumentParser)
+from photo_album import (Album, Package, GalleryImage, CustomArgumentParser)
 
 
 logger = logging.getLogger(__name__)
@@ -48,7 +48,8 @@ def mk_caption(config, pkgid, build=True):
         target = os.path.join(target_dir, '{}.jpg'.format(photoid))
         logger.info("Processing {}".format(source))
         logger.debug("Target is {}".format(target))
-        caption = Caption(config, source, target, photoid)
+        caption = GalleryImage(config, source, target)
+        caption.captioned_jpeg(photoid)
 
 
 def get_work_dir(config, build):

@@ -1,6 +1,6 @@
 from .utils import logged_class, CustomArgumentParser
 from .album import Album
 from .package import Package
-from .caption import Caption
+from .gallery_image import GalleryImage
 
 __version__ = "0.1"

@@ -10,7 +10,7 @@ import sqlite3
 import stat
 import subprocess
 import sys
-from photo_album import (Album, Package, CustomArgumentParser)
+from photo_album import (Album, Package, CustomArgumentParser, GalleryImage)
 
 
 logger = logging.getLogger(__name__)
@@ -62,6 +62,11 @@ def mk_gallery_jpeg(config, pkgid, build=True):
                 config.get('album', 'gallery_thumb_height'))
         thumb_scale_factor = compute_scale_factor(
                 gallery_thumb_height, im.size)
+
+        # Normalize the TIFF image if necessary.
+        norm_img = GalleryImage(config, source_photo, source_photo)
+        norm_img.normalize_tiff()
+
         jpeg_cmd = ['convert', '{source}'.format(source=source_photo),
                 '{target}'.format(target=gallery_jpeg_photo)]
         thumb_cmd = ['convert', '-resize',
