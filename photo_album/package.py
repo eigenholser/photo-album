@@ -54,8 +54,8 @@ class Package(AlbumBase):
         """
         file_list = self.photographs_list = sorted(
             [file for file in os.listdir(
-                    os.path.join(work_dir, pkgid, 'tiff'))
+                    os.path.join(work_dir, pkgid, 'jpeg'))
                 if not os.path.isdir(os.path.join(work_dir, pkgid, file))])
 
         self.photographs = [
-            file for file in file_list if os.path.splitext(file)[1] == ".tif"]
+            file for file in file_list if os.path.splitext(file)[1] == ".jpg"]
