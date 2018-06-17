@@ -78,8 +78,8 @@ cat <<BODY
         <td>{{ package["film"] }}</td>
       </tr>
       <tr>
-        <td class="metakey">Sequence</td>
-        <td>{{ package["sequence"] }}</td>
+        <td class="metakey">Nonce</td>
+        <td>{{ package["nonce"] }}</td>
       </tr>
       <tr>
         <td class="metakey">Frames</td>
@@ -100,6 +100,10 @@ cat <<BODY
       <tr>
         <td class="metakey">Interval Datetime</td>
         <td>{{ package["interval"] }}</td>
+      </tr>
+      <tr>
+        <td class="metakey">Sequence</td>
+        <td>{{ package["sequence"] }}</td>
       </tr>
     </table>
     <p>&nbsp;<p>
