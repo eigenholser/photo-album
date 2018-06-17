@@ -45,9 +45,10 @@ class Album(AlbumBase):
         cur.execute(query, package_list)
         rows = cur.fetchall()
         row_list = [
-            'pkgid', 'pkg_date', 'location', 'subjects', 'media_type',
-            'media_fmt', 'media_status', 'film', 'sequence', 'frames',
-            'pieces', 'sheets', 'set_datetime', 'interval', 'description'
+            'pkgid', 'sequence', 'pkg_date', 'location', 'subjects',
+            'media_type', 'media_fmt', 'media_status', 'film', 'nonce',
+            'frames', 'pieces', 'sheets', 'set_datetime', 'interval',
+            'description'
         ]
 
         for pkg in rows:
@@ -59,7 +60,10 @@ class Album(AlbumBase):
                     self.packages[pkg["pkgid"]][row_name] = pkg[row_name]
 
     def keys(self):
-        return sorted([pkgid for pkgid in self.packages.keys()])
+        # Sort pkgid's on sequence column of packages table.
+        pkgids = [package["pkgid"] for package in
+            sorted(self.packages.values(), key=lambda pkg: pkg["sequence"])]
+        return pkgids
 
     def __getitem__(self, key):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.

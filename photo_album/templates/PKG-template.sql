@@ -3,6 +3,7 @@ DELETE FROM packages WHERE pkgid="{{ pkgid }}";
 
 INSERT INTO packages VALUES (
     /* pkgid */         '{{ pkgid }}',
+    /* sequence */      'SEQUENCE',
     /* pkg_date */      'PKGDATE',
     /* location */      'LOCATION',
     /* subjects */      'SUBJECTS',
@@ -10,7 +11,7 @@ INSERT INTO packages VALUES (
     /* media_fmt */     'MEDIA_FMT',                /* 'roll', 'print', 'slide' */
     /* media_status */  'MEDIA_STATUS',             /* 'complete', 'partial' */
     /* film */          'FILM',
-    /* sequence */      'SEQUENCE',
+    /* nonce */         'NONCE',
     /* frames */        0,
     /* pieces */        0,
     /* sheets */        0,

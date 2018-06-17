@@ -11,6 +11,7 @@ CREATE TABLE albums (
 
 CREATE TABLE packages (
     pkgid           varchar(50),
+    sequence        varchar[10],        /* order in which packages appear in HTML */
     pkg_date        varchar(50),
     location        varchar(1024),
     subjects        varchar(1024),
@@ -18,7 +19,7 @@ CREATE TABLE packages (
     media_fmt       varchar(50),        /* 'roll', 'print', 'slide' */
     media_status    varchar(50),        /* 'complete', 'partial' */
     film            varchar(50),
-    sequence        varchar(10),
+    nonce           varchar(10),
     frames          int,
     pieces          int,
     sheets          int,
