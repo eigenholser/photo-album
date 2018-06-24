@@ -61,9 +61,8 @@ class Album(AlbumBase):
 
     def keys(self):
         # Sort pkgid's on sequence column of packages table.
-        pkgids = [package["pkgid"] for package in
+        return [package["pkgid"] for package in
             sorted(self.packages.values(), key=lambda pkg: pkg["sequence"])]
-        return pkgids
 
     def __getitem__(self, key):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.
