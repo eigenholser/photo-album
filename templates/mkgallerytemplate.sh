@@ -30,9 +30,6 @@ cat <<BODY1
 {% block body %}
   <body class="no-touch">
 {% endblock body %}
-{% block title %}
-            <h1>{{ pkgid }}</h1>
-{% endblock title %}
 {% block content %}
     <p><a href="../contents.html">Table of Contents</a> -
     <a href="detail.html" title="{{ pkgid }}">Package Details</a></p>

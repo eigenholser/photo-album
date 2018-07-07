@@ -6,6 +6,8 @@ wipdir=${0%%mkcontentstemplate.sh}
 
 cat <<CONTENT
 {% extends "base.html" %}
+{% block title %}<title>{{ title }}</title>{% endblock title %}
+{% block header_label %}<h1>{{ title }}</h1>{% endblock header_label %}
 {% block title_td %}
           <td class="title">
             <h1>{{ title }}</h1>

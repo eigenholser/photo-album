@@ -7,7 +7,7 @@ wipdir=${0%%mkbasetemplate.sh}
 cat <<HEAD
 <html>
   <head>
-    <title>{{ title }}</title>
+  {% block title %}<title>{{ pkgid }}</title>{% endblock title %}
     {% block style_gallery %}{% endblock %}
     <style type="text/css">
 HEAD
@@ -33,9 +33,9 @@ cat <<BODY2
 
   <div id="container">
     <header>
-      {% block title %}
-        <h1>{{ title }}</h1>
-      {% endblock title %}
+      {% block header_label %}
+        <h1>{{ pkgid }}</h1>
+      {% endblock header_label %}
 BODY2
 
 # This mess does a nice job at creating the logo img tag from external base64.
