@@ -6,9 +6,6 @@ wipdir=${0%%mkdetailtemplate.sh}
 
 cat <<BODY
 {% extends "base.html" %}
-{% block title %}
-            <h1>{{ pkgid }}</h1>
-{% endblock title %}
 {% block content %}
     <p><a href="../contents.html">Table of Contents</a> -
     <a href="gallery.html" title="{{ pkgid }}">Thumbnail Gallery</a></p>
