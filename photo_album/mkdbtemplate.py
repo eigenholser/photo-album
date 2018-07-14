@@ -23,27 +23,28 @@ def mk_db_template_album(config, build=True):
     packages = Album(config, build)
 
     for pkgid in packages.keys():
-        mk_db_template(config, pkgid, build)
+        mk_db_template(config, packages[pkgid], build)
 
 
-def mk_db_template(config, pkgid, build=True):
+def mk_db_template(config, package, build=True):
     """
     Build a package database template. Update existing if it already exists.
 
     Warning: The update mechanism is a one-shot update. It will do nothing if
     the SQL is already current.
     """
+    pkgid = package["pkgid"]
     work_dir = get_work_dir(config, build)
     db_dir = config.get('album', 'database_directory')
     tiff_src_dir = config.get('album', 'tiff_source_directory')
     gallery_tiff_dir = config.get('album', 'gallery_tiff_directory')
 
-    package = Package(config, pkgid, build)
+    package_contents = Package(config, pkgid, build)
     mapfile = os.path.join(work_dir, pkgid, tiff_src_dir, 'rename_map.txt')
     map = read_alt_file_map(mapfile)
 
     newpkg = collections.OrderedDict()
-    for photoid in sorted(package.keys()):
+    for photoid in sorted(package_contents.keys()):
         newpkg[map.get(photoid, photoid)] = {}
 
     for photoid in sorted(newpkg.keys()):
@@ -66,9 +67,8 @@ def mk_db_template(config, pkgid, build=True):
     )
 
     template_vars = {
-        "pkgid": pkgid,
+        "package": package,
         "photographs": newpkg,
-        "package": newpkg,
     }
 
     sql_template = env.get_template('PKG-template.sql')
@@ -88,6 +88,7 @@ def update(pkgid, package, dbfile):
     This is a migration and will not be useful once the one-time migration is
     complete.
     """
+    return
     with open(dbfile, 'r') as f:
         content = f.readlines()
 

@@ -60,9 +60,23 @@ class Album(AlbumBase):
                     self.packages[pkg["pkgid"]][row_name] = pkg[row_name]
 
     def keys(self):
-        # Sort pkgid's on sequence column of packages table.
-        return [package["pkgid"] for package in
-            sorted(self.packages.values(), key=lambda pkg: pkg["sequence"])]
+        # If packages do not exist in database, we must use dummy key/val so
+        # next step does not break. You'll need to manually edit the DB files
+        # later to set the sequence like you want.
+        for key, val in self.packages.items():
+            if not "pkgid" in val:
+                val["pkgid"] = key
+            if not "sequence" in val:
+                val["sequence"] = 1
+
+        # Sort pkgid's on pkgid then sequence of packages table. This is a two
+        # step sort. Sort on sequence numbers. If the sequence numbers are the
+        # same, then sort on pkgid.
+        secondary_sort = sorted(
+                self.packages.values(), key=lambda pkg: pkg["pkgid"])
+        primary_sort = [package["pkgid"] for package in
+                sorted(secondary_sort, key=lambda pkg: pkg["sequence"])]
+        return primary_sort
 
     def __getitem__(self, key):
         # TODO: validate and raise IndexError, TypeError, KeyError as needed.
