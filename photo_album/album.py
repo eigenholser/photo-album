@@ -21,6 +21,15 @@ class Album(AlbumBase):
         self.album_description()
         self.package_description(package_list)
 
+        # If packages do not exist in database, we must use dummy key/val so
+        # next step does not break. You'll need to manually edit the DB files
+        # later to set the sequence like you want.
+        for key, val in self.packages.items():
+            if not "pkgid" in val:
+                val["pkgid"] = key
+            if not "sequence" in val:
+                val["sequence"] = 1
+
     def album_description(self):
         """
         Retrieve album description from database.
@@ -60,15 +69,6 @@ class Album(AlbumBase):
                     self.packages[pkg["pkgid"]][row_name] = pkg[row_name]
 
     def keys(self):
-        # If packages do not exist in database, we must use dummy key/val so
-        # next step does not break. You'll need to manually edit the DB files
-        # later to set the sequence like you want.
-        for key, val in self.packages.items():
-            if not "pkgid" in val:
-                val["pkgid"] = key
-            if not "sequence" in val:
-                val["sequence"] = 1
-
         # Sort pkgid's on pkgid then sequence of packages table. This is a two
         # step sort. Sort on sequence numbers. If the sequence numbers are the
         # same, then sort on pkgid.
