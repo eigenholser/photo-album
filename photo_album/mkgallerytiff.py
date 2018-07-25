@@ -88,7 +88,7 @@ def mk_gallery_tiff(config, pkgid, build=True):
                     int((crop[2] * scale_factor)/100),
                     int((crop[3] * scale_factor)/100),)
                 logger.warn("New crop marks: {}x{}+{}+{}".format(*new_crop))
-                crop_cmd = ['convert', '-crop {}x{}+{}+{}'.format(*new_crop),
+                crop_cmd = ['convert', '-crop', '{}x{}+{}+{}'.format(*new_crop),
                         '{source}'.format(source=target_photo),
                         '{target}'.format(target=target_photo)]
                 logger.warn(crop_cmd)
