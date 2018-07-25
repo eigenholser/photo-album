@@ -26,6 +26,15 @@ def mk_db_template_album(config, build=True):
         mk_db_template(config, packages[pkgid], build)
 
 
+def get_package(config, pkgid, build=True):
+    """
+    Get a single package.
+    """
+    work_dir = get_work_dir(config, build)
+    packages = Album(config, build)
+    return packages[pkgid]
+
+
 def mk_db_template(config, package, build=True):
     """
     Build a package database template. Update existing if it already exists.
@@ -88,7 +97,6 @@ def update(pkgid, package, dbfile):
     This is a migration and will not be useful once the one-time migration is
     complete.
     """
-    return
     with open(dbfile, 'r') as f:
         content = f.readlines()
 
@@ -255,7 +263,8 @@ def main():
         # clearly expressed this way.
         logger.warn("Working in album directory: {}".format(args.album))
         if pkgid:
-            mk_db_template(config, pkgid, not args.album)
+            package = get_package(config, pkgid, not args.album)
+            mk_db_template(config, package, not args.album)
         else:
             mk_db_template_album(config, not args.album)
 
