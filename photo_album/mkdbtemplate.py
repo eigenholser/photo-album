@@ -10,6 +10,7 @@ import stat
 import subprocess
 import sys
 from photo_album import (Album, Package, CustomArgumentParser)
+from photo_album.mkgallerytiff import get_crop
 
 
 logger = logging.getLogger(__name__)
@@ -85,18 +86,19 @@ def mk_db_template(config, package, build=True):
     dbfile = os.path.join(db_dir, 'PKG-{}.sql'.format(pkgid))
     if os.path.isfile(dbfile):
         logger.warn("PKG-{}.sql exists. Performing update.".format(pkgid))
-        update(pkgid, newpkg, dbfile)
+        update(package_contents, pkgid, newpkg, dbfile)
     else:
         logger.info("Writing package {}.sql".format(pkgid))
         with open(dbfile, 'w') as f:
             f.write(sql_template.render(template_vars))
 
 
-def update(pkgid, package, dbfile):
+def update(package_contents, pkgid, package, dbfile):
     """
     This is a migration and will not be useful once the one-time migration is
     complete.
     """
+    pkg = package_contents
     with open(dbfile, 'r') as f:
         content = f.readlines()
 
@@ -109,7 +111,7 @@ def update(pkgid, package, dbfile):
                 idx = content.index(line)
                 pattern = re.sub(r'\+', '\\+', photoid)
                 if (re.search(r'{}'.format(pattern), content[idx + 2])):
-                    cropval = package[photoid].get('crop', '')
+                    cropval = "{}x{}+{}+{}".format(*get_crop(pkg, photoid))
                     pinserts[photoid] = [
                         content[idx + 0],
                         content[idx + 1],
@@ -129,7 +131,7 @@ def update(pkgid, package, dbfile):
             for line in pinserts[photoid]:
                 content.append(line)
         elif pinserts.keys():
-            cropval = package[photoid].get('crop', '')
+            cropval = "{}x{}+{}+{}".format(*get_crop(pkg, photoid))
             content.append("INSERT INTO photographs VALUES (\n")
             content.append("    /* pkgid */         '{}',\n".format(pkgid))
             content.append("    /* photoid */       '{}',\n".format(photoid))

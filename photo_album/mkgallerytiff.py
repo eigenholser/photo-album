@@ -87,7 +87,8 @@ def mk_gallery_tiff(config, pkgid, build=True):
                     int((crop[1] * scale_factor)/100),
                     int((crop[2] * scale_factor)/100),
                     int((crop[3] * scale_factor)/100),)
-                logger.warn("New crop marks: {}x{}+{}+{}".format(*new_crop))
+                new_crop_str = "{}x{}+{}+{}".format(*new_crop)
+                logger.warn("New crop marks: {}".format(new_crop_str))
                 crop_cmd = ['convert', '-crop', '{}x{}+{}+{}'.format(*new_crop),
                         '{source}'.format(source=target_photo),
                         '{target}'.format(target=target_photo)]
@@ -96,6 +97,7 @@ def mk_gallery_tiff(config, pkgid, build=True):
                 #      fails.
                 run = subprocess.run(
                         crop_cmd, stdout=subprocess.PIPE, check=True)
+                set_crop(package, photoid, new_crop_str)
 
 
 def compute_scale_factor(config, size):
@@ -130,6 +132,16 @@ def get_crop(package, photoid):
                     int(match.group(3)), int(match.group(4)))
             return crop
     return None
+
+
+def set_crop(package, photoid, crop):
+    """
+    Set new calculated crop value in database on photoid.
+    """
+    query = "UPDATE photographs SET crop=? WHERE photoid=?"
+    cur = package.conn.cursor()
+    cur.execute(query, (crop, photoid,))
+    package.conn.commit()
 
 
 def get_work_dir(config, build):
