@@ -266,7 +266,9 @@ def main():
             package = get_package(config, pkgid, not args.album)
             mk_db_template(config, package, not args.album)
         else:
-            mk_db_template_album(config, not args.album)
+            # Worried about accidental operation on entire Album directory.
+            # mk_db_template_album(config, not args.album)
+            mk_db_template_album(config)
 
     if error:
         parser.usage_message()

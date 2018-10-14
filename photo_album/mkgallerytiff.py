@@ -179,7 +179,9 @@ def main():
         if pkgid:
             mk_gallery_tiff(config, pkgid, not args.album)
         else:
-            mk_gallery_tiff_album(config, not args.album)
+            # Worried about accidental operation on entire Album directory.
+            # mk_gallery_tiff_album(config, not args.album)
+            mk_gallery_tiff_album(config)
 
     if error:
         logger.error("Exiting due to errors.")
