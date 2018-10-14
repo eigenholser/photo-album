@@ -78,7 +78,7 @@ def mk_gallery_tiff(config, pkgid, build=True):
                 "Crop marks already recorded. Checking for proper scaling.")
             gallery_height = int(config.get('album', 'gallery_height'))
             if crop[0] != gallery_height:
-                logger.warn("Scaling not correct. Rescaling.")
+                logger.warn("Scaling not correct. Rescaling and cropping...")
                 scale_factor = compute_scale_factor(
                         config, (int(crop[0]), int(crop[1],)))
                 logger.debug("Computed new scale factor {:3.2f}".format(
@@ -92,12 +92,23 @@ def mk_gallery_tiff(config, pkgid, build=True):
                 crop_cmd = ['convert', '-crop', '{}x{}+{}+{}'.format(*new_crop),
                         '{source}'.format(source=target_photo),
                         '{target}'.format(target=target_photo)]
-                logger.warn(crop_cmd)
+                logger.debug(crop_cmd)
                 # XXX: Intentionally not handling exception if subprocess
                 #      fails.
                 run = subprocess.run(
                         crop_cmd, stdout=subprocess.PIPE, check=True)
                 set_crop(package, photoid, new_crop_str)
+            else:
+                logger.warn("Scaling as expected. Cropping...")
+                crop_str = "{}x{}+{}+{}".format(*crop)
+                crop_cmd = ['convert', '-crop', '{}'.format(crop_str),
+                        '{source}'.format(source=target_photo),
+                        '{target}'.format(target=target_photo)]
+                logger.debug(crop_cmd)
+                # XXX: Intentionally not handling exception if subprocess
+                #      fails.
+                run = subprocess.run(
+                        crop_cmd, stdout=subprocess.PIPE, check=True)
 
 
 def compute_scale_factor(config, size):
