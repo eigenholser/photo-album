@@ -75,7 +75,7 @@ class Album(AlbumBase):
         secondary_sort = sorted(
                 self.packages.values(), key=lambda pkg: pkg["pkgid"])
         primary_sort = [package["pkgid"] for package in
-                sorted(secondary_sort, key=lambda pkg: pkg["sequence"])]
+                sorted(secondary_sort, key=lambda pkg: int(pkg["sequence"]))]
         return primary_sort
 
     def __getitem__(self, key):
