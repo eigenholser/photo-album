@@ -54,7 +54,31 @@ def mk_gallery_tiff(config, pkgid, build=True):
         Image.MAX_IMAGE_PIXELS = int(1024 * 1024 * 1024)
 
         im = Image.open(source_photo)
-        scale_factor = compute_scale_factor(config, im.size)
+
+        crop = get_crop(package, photoid)
+        scale_factor = None
+        if crop:
+            # Crop marks recorded from previous processing.
+            logger.debug(
+                "Crop marks already recorded. Checking for proper scaling.")
+            gallery_height = int(config.get('album', 'gallery_height'))
+            gallery_width = gallery_height # Yes, we are committing to square.
+            if crop[0] != gallery_height:
+                logger.warn("Scaling not correct. Rescaling and cropping...")
+                scale_factor = compute_scale_factor(
+                        config, (int(crop[0]), int(crop[1],)))
+                logger.debug("Computed new scale factor {:3.2f}".format(
+                    scale_factor))
+                new_crop = (gallery_width, gallery_height,
+                    int((crop[2] * scale_factor)/100),
+                    int((crop[3] * scale_factor)/100),)
+                new_crop_str = "{}x{}+{}+{}".format(*new_crop)
+                set_crop(package, photoid, new_crop_str)
+
+        if scale_factor is None:
+            # Crop marks not previously recorded.
+            scale_factor = compute_scale_factor(config, im.size)
+
         logger.debug("({}x{}) [{}] {}".format(
             im.size[0], im.size[1], scale_factor, photoid))
         resize_cmd = ['convert', '-resize',
@@ -71,44 +95,18 @@ def mk_gallery_tiff(config, pkgid, build=True):
             run = subprocess.run(
                     resize_cmd, stdout=subprocess.PIPE, check=True)
 
-        # TODO: Refactor this to be functional'ish.
-        crop = get_crop(package, photoid)
+        # Resize complete. Crop if previously recorded.
         if crop:
-            logger.debug(
-                "Crop marks already recorded. Checking for proper scaling.")
-            gallery_height = int(config.get('album', 'gallery_height'))
-            if crop[0] != gallery_height:
-                logger.warn("Scaling not correct. Rescaling and cropping...")
-                scale_factor = compute_scale_factor(
-                        config, (int(crop[0]), int(crop[1],)))
-                logger.debug("Computed new scale factor {:3.2f}".format(
-                    scale_factor))
-                new_crop = (int((crop[0] * scale_factor)/100),
-                    int((crop[1] * scale_factor)/100),
-                    int((crop[2] * scale_factor)/100),
-                    int((crop[3] * scale_factor)/100),)
-                new_crop_str = "{}x{}+{}+{}".format(*new_crop)
-                logger.warn("New crop marks: {}".format(new_crop_str))
-                crop_cmd = ['convert', '-crop', '{}x{}+{}+{}'.format(*new_crop),
-                        '{source}'.format(source=target_photo),
-                        '{target}'.format(target=target_photo)]
-                logger.debug(crop_cmd)
-                # XXX: Intentionally not handling exception if subprocess
-                #      fails.
-                run = subprocess.run(
-                        crop_cmd, stdout=subprocess.PIPE, check=True)
-                set_crop(package, photoid, new_crop_str)
-            else:
-                logger.warn("Scaling as expected. Cropping...")
-                crop_str = "{}x{}+{}+{}".format(*crop)
-                crop_cmd = ['convert', '-crop', '{}'.format(crop_str),
-                        '{source}'.format(source=target_photo),
-                        '{target}'.format(target=target_photo)]
-                logger.debug(crop_cmd)
-                # XXX: Intentionally not handling exception if subprocess
-                #      fails.
-                run = subprocess.run(
-                        crop_cmd, stdout=subprocess.PIPE, check=True)
+            logger.warn("Scaling as expected. Cropping...")
+            crop_str = "{}x{}+{}+{}".format(*crop)
+            crop_cmd = ['convert', '-crop', '{}'.format(crop_str),
+                    '{source}'.format(source=target_photo),
+                    '{target}'.format(target=target_photo)]
+            logger.debug(crop_cmd)
+            # XXX: Intentionally not handling exception if subprocess
+            #      fails.
+            run = subprocess.run(
+                    crop_cmd, stdout=subprocess.PIPE, check=True)
 
 
 def compute_scale_factor(config, size):
