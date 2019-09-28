@@ -88,7 +88,7 @@ You want to change the size of the gallery-tiff images
 `mkgallerytiff` will
 check to see if crop marks have been saved in the `photographs` table for this
 photograph. If so, it will check the height against the configured height in
-the `gallerh_height` configuration parameter. If these are different, a new
+the `gallery_height` configuration parameter. If these are different, a new
 scale factor will be computed. Crop marks will be adjusted and saved in DB.
 The new scale factor will be used against the source photograph. After resize,
 the photograph will be cropped against the new crop marks.
