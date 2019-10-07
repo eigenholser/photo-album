@@ -30,7 +30,7 @@ INSERT INTO photographs VALUES (
     /* photoid */       '{{ photoid }}',
     /* crop */          '{{ photographs[photoid]["crop"] }}',
     /* poi */           0,
-    /* description */   ''
+    /* description */   '{{ photographs[photoid]["description"]|safe }}'
 );
 {% endfor %}
 
