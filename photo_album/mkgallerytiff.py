@@ -117,11 +117,38 @@ def compute_scale_factor(config, size):
     gallery_height = int(config.get('album', 'gallery_height'))
     source_width = size[0]
     source_height = size[1]
+    source_ratio = source_width/source_height
+
+    logger.info("Source ratio: {}".format(source_ratio))
+
     if source_width < source_height:
         landscape = False
+
+    # XXX: Magic number alert.
+    # If we have a narrow landscape image, reverse the orientation. Fall
+    # through to the landscape == False orientation. Landscape and portrait
+    # limits are the inverse of one another - i.e. 3 ~ 0.33
+
+    portrait_scale_factor = gallery_height/source_width * 100
+    landscape_scale_factor = gallery_height/source_height * 100
+
     if landscape:
-        return gallery_height/source_height * 100
-    return gallery_height/source_width * 100
+        if source_ratio < 3:
+            return landscape_scale_factor
+        else:
+            logger.warn(
+                "Source ratio == {}. Overriding landscape orientation ".format(
+                    source_ratio))
+            return portrait_scale_factor
+
+    # portrait == True
+    if source_ratio > 0.33:
+        return portrait_scale_factor
+    else:
+        logger.warn(
+            "Source ratio == {}. Overriding portrait orientation ".format(
+                source_ratio))
+        return landscape_scale_factor
 
 
 def get_crop(package, photoid):
