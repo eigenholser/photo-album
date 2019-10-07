@@ -49,15 +49,20 @@ populating the database for that package. It also has some facility for
 doing DB migrations as schema changes occur. It serves as a replacement for a
 front-end and will do nicely for now.
 
-`mkgallerytiff` copies original TIFF images from the `tiff` directory into the
-`gallery-tiff` directory. If there is a `crop` value present in the database,
-the image will be cropped as described. Note that if cropping occurs,
-`mkdbtemplate` must be run again to capture the new crop marks. The SQL must
-also be invoked again to populate the database.
+`mkgallerytiff` copies and scales the original TIFF images from the `tiff`
+directory into the `gallery-tiff` directory. If there is a `crop` value present
+in the database, the image will be cropped as described. Note that if cropping
+occurs, `mkdbtemplate` must be run again to capture the new crop marks. The SQL
+must also be invoked again to populate the database.
 
 Manual cropping must be performed after this console script has been run. This
 is not true if `mkgallerytiff` is being run after a previous crop and the new
-cropping is done automatically.
+cropping is done automatically. Of course, in some cases, cropping is not
+appropriate.
+
+The photo album does expect to work with square thumbnail images. If you choose
+to not crop, subsequent steps will pad the images appropriately and everything
+will work out.
 
 `mkgalleryjpeg` converts the cropped TIFF images to JPEG with no scaling. These
 are suitable for producing prints. This command will also produce the
@@ -85,13 +90,42 @@ There are things you might want to do and here's how to do 'em.
 You want to change the size of the gallery-tiff images
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+`mkdbtemplate` will create a SQL file template for each package in the build
+directory. If run with the `-p PKG` flag it will operate on a single package.
+I find it most convenient to run it against a single package. The `photoid`
+column in the `photographs` table is populated from the `rename_map.txt` file
+in the `tiff` directory. The `rename_map.txt` file comes from the `photo-rename`
+project and contains a mapping from old filename to new filename. The new
+filename is taken and used as the `photoid`. The `jpeg` directory is read for
+filenames and must be populated before running the `mkdbtemplate` command.
+Here is a quick way to create the JPEG files from TIFF:
+
+    for tiff in ../tiff/*.tif
+    do
+        fn=${tiff#../tiff/*}
+        newfn=${fn%*.tif}.jpg
+        convert_cmd="convert $tiff $newfn"
+        echo $convert_cmd
+        $convert_cmd
+    done
+
+This code is a mess. The `rename_map.txt` file may contain an inline comment.
+If present, the comment is used as the `description` column.
+
+Once the SQL is generated and hand-crafted to your satisfaction, just run it
+against your database::
+
+    sqlite3 albumdb.sqlite < PKG-PHOTOS.sql
+
 `mkgallerytiff` will
 check to see if crop marks have been saved in the `photographs` table for this
 photograph. If so, it will check the height against the configured height in
 the `gallery_height` configuration parameter. If these are different, a new
 scale factor will be computed. Crop marks will be adjusted and saved in DB.
 The new scale factor will be used against the source photograph. After resize,
-the photograph will be cropped against the new crop marks.
+the photograph will be cropped against the new crop marks. The target resolution
+is in the configuration file. The scale factor will be calculated after
+comparing the target resolution with the source image resolution.
 
 
 Editing and Building the Templates
