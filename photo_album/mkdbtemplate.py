@@ -53,9 +53,22 @@ def mk_db_template(config, package, build=True):
     mapfile = os.path.join(work_dir, pkgid, tiff_src_dir, 'rename_map.txt')
     map = read_alt_file_map(mapfile)
 
+    # XXX: This code is a mess. Just sayin'
+
     newpkg = collections.OrderedDict()
     for photoid in sorted(package_contents.keys()):
-        newpkg[map.get(photoid, photoid)] = {}
+        mapped_photoid = map.get(photoid, photoid)
+        # Find inline comment.
+        match = re.match(r"^(.+)\s+#(.+)$", mapped_photoid)
+        if match:
+            id = match.group(1).strip() # photoid for db
+            description = match.group(2).strip()
+        else:
+            id = photoid
+            description = ''
+        # XXX: If inline comment then break up and use comment as description.
+
+        newpkg[id] = {'description': description}
 
     for photoid in sorted(newpkg.keys()):
         photo = os.path.join(
