@@ -98,7 +98,7 @@ in the ``tiff`` directory. The ``rename_map.txt`` file comes from the ``photo-re
 project and contains a mapping from old filename to new filename. The new
 filename is taken and used as the ``photoid``. The ``jpeg`` directory is read for
 filenames and must be populated before running the `mkdbtemplate` command.
-Here is a quick way to create the JPEG files from TIFF:
+Here is a quick way to create the JPEG files from TIFF::
 
     for tiff in ../tiff/*.tif
     do
