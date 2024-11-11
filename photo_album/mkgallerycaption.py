@@ -48,8 +48,11 @@ def mk_caption(config, pkgid, build=True):
         target = os.path.join(target_dir, '{}.jpg'.format(photoid))
         logger.info("Processing {}".format(source))
         logger.debug("Target is {}".format(target))
-        caption = GalleryImage(config, source, target)
-        caption.captioned_jpeg(photoid)
+        if os.path.exists(target):
+            logger.warn("Target exists. Skipping {}".format(target))
+        else:
+            caption = GalleryImage(config, source, target)
+            caption.captioned_jpeg(photoid)
 
 
 def get_work_dir(config, build):

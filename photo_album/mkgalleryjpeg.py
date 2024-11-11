@@ -76,14 +76,20 @@ def mk_gallery_jpeg(config, pkgid, build=True):
         logger.debug("{}".format(jpeg_cmd))
         logger.info("Creating gallery JPEG {}.jpg".format(photoid))
         # XXX: Intentionally not handling exception if subprocess fails.
-        run = subprocess.run(jpeg_cmd, stdout=subprocess.PIPE, check=True)
+        if os.path.exists(gallery_jpeg_photo):
+            logger.info("File exists. Skipping {}".format(gallery_jpeg_photo))
+        else:
+            run = subprocess.run(jpeg_cmd, stdout=subprocess.PIPE, check=True)
 
         logger.debug("{}".format(thumb_cmd))
         logger.info(
             "Creating gallery thumbnail JPEG {}.jpg with scaling {:3.2f}%".format(
             photoid, thumb_scale_factor))
         # XXX: Intentionally not handling exception if subprocess fails.
-        run = subprocess.run(
+        if os.path.exists(gallery_thumb_photo):
+            logger.info("File exists. Skipping {}".format(gallery_jpeg_photo))
+        else:
+            run = subprocess.run(
                 thumb_cmd, stdout=subprocess.PIPE, check=True)
 
 
