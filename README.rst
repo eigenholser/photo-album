@@ -13,7 +13,7 @@ The purpose of the ``photo_album`` application is to generate an HTML
 files is gathered from an SQLite database by reading the album and package
 directory contents
 
-The ``database schema`` is in the ``database`` directory. It is a simple two-table
+The database schema is in the ``database`` directory. It is a simple two-table
 structure that defines a one-to-many relationship between packages and
 photographs. Taken together, this database constitutes the album.
 
