@@ -13,7 +13,7 @@ The purpose of the ``photo_album`` application is to generate an HTML
 files is gathered from an SQLite database by reading the album and package
 directory contents
 
-The `database schema`_ is in the ``database`` directory. It is a simple two-table
+The ``database schema``_ is in the ``database`` directory. It is a simple two-table
 structure that defines a one-to-many relationship between packages and
 photographs. Taken together, this database constitutes the album.
 
@@ -44,12 +44,12 @@ operations on packages in the album.::
     mkgalleryjpeg
     mkgallerycaption
 
-`mkdbtemplate` produces database schema for each package to be used for
+``mkdbtemplate`` produces database schema for each package to be used for
 populating the database for that package. It also has some facility for
 doing DB migrations as schema changes occur. It serves as a replacement for a
 front-end and will do nicely for now.
 
-`mkgallerytiff` copies and scales the original TIFF images from the `tiff`
+``mkgallerytiff`` copies and scales the original TIFF images from the `tiff`
 directory into the `gallery-tiff` directory. If there is a `crop` value present
 in the database, the image will be cropped as described. Note that if cropping
 occurs, `mkdbtemplate` must be run again to capture the new crop marks. The SQL
@@ -64,15 +64,15 @@ The photo album does expect to work with square thumbnail images. If you choose
 to not crop, subsequent steps will pad the images appropriately and everything
 will work out.
 
-`mkgalleryjpeg` converts the cropped TIFF images to JPEG with no scaling. These
+``mkgalleryjpeg`` converts the cropped TIFF images to JPEG with no scaling. These
 are suitable for producing prints. This command will also produce the
 thumbnails needed for the thumbnail gallery.
 
-`mkgallerycaption` processes the cropped gallery TIFF images to JPEG and places
+``mkgallerycaption`` processes the cropped gallery TIFF images to JPEG and places
 the photo ID as a caption on the image. The resolution is the same as the
 gallery TIFF images. These images are suitable for a printed index.
 
-`mkcontents` combines packages it finds on the filesystem with data from the
+``mkcontents`` combines packages it finds on the filesystem with data from the
 database and produces an album table of contents and for each package produces
 a thumbnail gallery and detail view. This command must be run last once all
 the previous processing steps have been performed.
@@ -90,13 +90,13 @@ There are things you might want to do and here's how to do 'em.
 You want to change the size of the gallery-tiff images
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-`mkdbtemplate` will create a SQL file template for each package in the build
-directory. If run with the `-p PKG` flag it will operate on a single package.
-I find it most convenient to run it against a single package. The `photoid`
-column in the `photographs` table is populated from the `rename_map.txt` file
-in the `tiff` directory. The `rename_map.txt` file comes from the `photo-rename`
+``mkdbtemplate`` will create a SQL file template for each package in the build
+directory. If run with the ``-p PKG`` flag it will operate on a single package.
+I find it most convenient to run it against a single package. The ``photoid``
+column in the ``photographs`` table is populated from the ``rename_map.txt`` file
+in the ``tiff`` directory. The ``rename_map.txt`` file comes from the ``photo-rename``
 project and contains a mapping from old filename to new filename. The new
-filename is taken and used as the `photoid`. The `jpeg` directory is read for
+filename is taken and used as the ``photoid``. The ``jpeg`` directory is read for
 filenames and must be populated before running the `mkdbtemplate` command.
 Here is a quick way to create the JPEG files from TIFF:
 
@@ -109,18 +109,18 @@ Here is a quick way to create the JPEG files from TIFF:
         $convert_cmd
     done
 
-This code is a mess. The `rename_map.txt` file may contain an inline comment.
-If present, the comment is used as the `description` column.
+This code is a mess. The ``rename_map.txt`` file may contain an inline comment.
+If present, the comment is used as the ``description`` column.
 
 Once the SQL is generated and hand-crafted to your satisfaction, just run it
 against your database::
 
     sqlite3 albumdb.sqlite < PKG-PHOTOS.sql
 
-`mkgallerytiff` will
-check to see if crop marks have been saved in the `photographs` table for this
+``mkgallerytiff`` will
+check to see if crop marks have been saved in the ``photographs`` table for this
 photograph. If so, it will check the height against the configured height in
-the `gallery_height` configuration parameter. If these are different, a new
+the ``gallery_height`` configuration parameter. If these are different, a new
 scale factor will be computed. Crop marks will be adjusted and saved in DB.
 The new scale factor will be used against the source photograph. After resize,
 the photograph will be cropped against the new crop marks. The target resolution
