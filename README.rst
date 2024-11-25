@@ -21,7 +21,6 @@ The configuration file ``album.cfg`` must be configured properly. The database
 must be created. Currently there no import functionality so you'll be enjoying
 some quality time with SQLite SQL92 syntax.
 
-
 Installation
 ------------
 
@@ -49,14 +48,14 @@ populating the database for that package. It also has some facility for
 doing DB migrations as schema changes occur. It serves as a replacement for a
 front-end and will do nicely for now.
 
-``mkgallerytiff`` copies and scales the original TIFF images from the `tiff`
-directory into the `gallery-tiff` directory. If there is a `crop` value present
+``mkgallerytiff`` copies and scales the original TIFF images from the ``tiff``
+directory into the ``gallery-tiff`` directory. If there is a ``crop`` value present
 in the database, the image will be cropped as described. Note that if cropping
-occurs, `mkdbtemplate` must be run again to capture the new crop marks. The SQL
+occurs, ``mkdbtemplate`` must be run again to capture the new crop marks. The SQL
 must also be invoked again to populate the database.
 
 Manual cropping must be performed after this console script has been run. This
-is not true if `mkgallerytiff` is being run after a previous crop and the new
+is not true if ``mkgallerytiff`` is being run after a previous crop and the new
 cropping is done automatically. Of course, in some cases, cropping is not
 appropriate.
 
@@ -97,7 +96,7 @@ column in the ``photographs`` table is populated from the ``rename_map.txt`` fil
 in the ``tiff`` directory. The ``rename_map.txt`` file comes from the ``photo-rename``
 project and contains a mapping from old filename to new filename. The new
 filename is taken and used as the ``photoid``. The ``jpeg`` directory is read for
-filenames and must be populated before running the `mkdbtemplate` command.
+filenames and must be populated before running the ``mkdbtemplate`` command.
 Here is a quick way to create the JPEG files from TIFF::
 
     for tiff in ../tiff/*.tif
@@ -108,6 +107,9 @@ Here is a quick way to create the JPEG files from TIFF::
         echo $convert_cmd
         $convert_cmd
     done
+
+This shell example makes use of the ImageMagick software suite, namely the
+``convert`` utility.
 
 This code is a mess. The ``rename_map.txt`` file may contain an inline comment.
 If present, the comment is used as the ``description`` column.
