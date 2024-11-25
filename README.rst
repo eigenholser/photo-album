@@ -108,7 +108,7 @@ Here is a quick way to create the JPEG files from TIFF::
         $convert_cmd
     done
 
-This shell example makes use of the ImageMagick software suite, namely the
+This shell example makes use of the `ImageMagick software suite`_, namely the
 ``convert`` utility.
 
 This code is a mess. The ``rename_map.txt`` file may contain an inline comment.
@@ -146,3 +146,4 @@ See the `README in the templates directory`_ for details.
 .. _Thumbnail Gallery JSbin: http://jsbin.com/dewuhewari/edit?html,output
 .. _CSS to make HTML page footer stay at bottom of the page with a minimum height: http://jsfiddle.net/3L3h64qo/2/
 .. _JSFiddle for previous Stackoverflow: http://jsfiddle.net/3L3h64qo/2/
+.. _ImageMagic software suite: https://imagemagick.org/
